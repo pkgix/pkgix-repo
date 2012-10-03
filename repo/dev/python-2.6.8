@@ -1,0 +1,46 @@
+# Based on: http://aur.archlinux.org/packages/gc/gcc46/PKGBUILD
+
+version=2.6.8
+description="Python version $version"
+depends=("dev/gdbm")
+
+isinstalled() {
+	python2 --version | grep -q "$version" &> /dev/null
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://www.python.org/ftp/python/${version}/Python-${version}.tar.bz2"
+
+	cd "Python-${version}"
+		
+	fetch \
+		"http://bugs.python.org/file14933/python-support_bdb-4.8.patch"
+		"2a4b9d85c6b616e5df30d42d0890865f2c2103e8d7d5d7d77c092f1f7aff1458"
+
+	fetch \
+		"https://raw.github.com/melver/localpkgenv-repo/master/support/patches/dev/python-2.6-internal-expat.patch" \
+		"c99c8305180083e40aff789e3a3c74ed375037fdc7bd02876270b09274033069"
+
+	patch -Np0 -i python-support_bdb-4.8.patch
+	patch -Np0 -i python-2.6-internal-expat.patch
+
+	# Use system libraries
+	rm -r Modules/expat
+	rm -r Modules/zlib
+
+	./configure --prefix="$1" --enable-shared --with-threads --enable-ipv6 \
+                --enable-unicode=ucs4 --with-system-ffi
+
+	make #MACHDEP=linux2
+}
+
+installenv() {
+	make -j1 DESTDIR="$2" altinstall maninstall
+}
+
+# vim: set ft=sh :
