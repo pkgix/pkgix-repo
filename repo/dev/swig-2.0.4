@@ -1,0 +1,31 @@
+
+version=2.0.4
+description="SWIG"
+depends=()
+
+isinstalled() {
+	make -version | grep -q "$version" &> /dev/null
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://downloads.sourceforge.net/swig/swig-${version}.tar.gz" \
+		"763a117730d26f8e5ed67f5718c6c0761fbb8461680fc20269db8c0839e1ec8a"
+
+	cd "swig-${version}"
+
+	./configure --prefix="$1"
+	
+	make
+}
+
+installenv() {
+	cd "swig-${version}"
+	make DESTDIR="$2" install
+}
+
+# vim: set ft=sh :

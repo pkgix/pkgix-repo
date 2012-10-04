@@ -1,4 +1,4 @@
-# http://aur.archlinux.org/packages/py/python26/PKGBUILD
+# Based on: http://aur.archlinux.org/packages/py/python26/PKGBUILD
 
 version=2.6.8
 description="Python version $version"
@@ -38,7 +38,14 @@ build() {
 	./configure --prefix="$1" --enable-shared --with-threads --enable-ipv6 \
                 --enable-unicode=ucs4 --with-system-ffi
 
-	make LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" #MACHDEP=linux2
+	case "$platform" in
+		*linux*)
+			make LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" MACHDEP=linux2
+			;;
+		*)
+			make LDFLAGS="-Wl,-rpath=$LD_RUN_PATH"
+			;;
+	esac
 }
 
 installenv() {
