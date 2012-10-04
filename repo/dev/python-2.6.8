@@ -1,11 +1,11 @@
-# Based on: http://aur.archlinux.org/packages/gc/gcc46/PKGBUILD
+# http://aur.archlinux.org/packages/py/python26/PKGBUILD
 
 version=2.6.8
 description="Python version $version"
 depends=("dev/gdbm")
 
 isinstalled() {
-	python2 --version | grep -q "$version" &> /dev/null
+	python2 --version 2>&1 | grep -q "$version" &> /dev/null
 }
 
 iscompat() {
@@ -13,17 +13,19 @@ iscompat() {
 }
 
 build() {
+	return 0
 	fetch_extract \
-		"http://www.python.org/ftp/python/${version}/Python-${version}.tar.bz2"
+		"http://www.python.org/ftp/python/${version}/Python-${version}.tar.bz2" \
+		"c34036718ee1f091736677f543bc7960861cf9fcbea77d49572b59f7f1ab3c3f"
 
 	cd "Python-${version}"
 		
 	fetch \
-		"http://bugs.python.org/file14933/python-support_bdb-4.8.patch"
+		"http://bugs.python.org/file14933/python-support_bdb-4.8.patch" \
 		"2a4b9d85c6b616e5df30d42d0890865f2c2103e8d7d5d7d77c092f1f7aff1458"
 
 	fetch \
-		"https://raw.github.com/melver/localpkgenv-repo/master/support/patches/dev/python-2.6-internal-expat.patch" \
+		"$repo_url/../support/patches/dev/python-2.6-internal-expat.patch" \
 		"c99c8305180083e40aff789e3a3c74ed375037fdc7bd02876270b09274033069"
 
 	patch -Np0 -i python-support_bdb-4.8.patch
@@ -36,11 +38,14 @@ build() {
 	./configure --prefix="$1" --enable-shared --with-threads --enable-ipv6 \
                 --enable-unicode=ucs4 --with-system-ffi
 
-	make #MACHDEP=linux2
+	make LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" #MACHDEP=linux2
 }
 
 installenv() {
-	make -j1 DESTDIR="$2" altinstall maninstall
+	cd "Python-${version}"
+	make DESTDIR="$2" altinstall maninstall
+
+	ln -s python2.6 "$2/$1/bin/python2"
 }
 
 # vim: set ft=sh :

@@ -41,6 +41,7 @@ build() {
 }
 
 installenv() {
+	cd "gdbm-${version}"
 	make DESTDIR="$2" install
 }
 

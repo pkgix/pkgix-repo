@@ -1,0 +1,32 @@
+
+version=2.2.0
+description="Scons build system $version"
+depends=("dev/python2")
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://downloads.sourceforge.net/sourceforge/scons/scons-$version.tar.gz" \
+		"f7fcd11a7af7ec13d587a2f7cf14a92e3223eea64bf078454a9856ec0ab465b9"
+}
+
+installenv() {
+	cd "scons-$version"
+	python2 setup.py install --standard-lib \
+	                         --prefix="$1" \
+	                         --install-data="$1/share" \
+	                         --optimize=1 \
+	                         --root="$2"
+
+	sed -i 's:^#!.*bin/env python:#!/usr/bin/env python2:' \
+		"$2/$1/bin"/*
+}
+
+# vim: set ft=sh :

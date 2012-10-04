@@ -1,10 +1,10 @@
 
 version=3.2.3
-description="Python version $version"
+description="The Python 3 interpreter"
 depends=("dev/gdbm")
 
 isinstalled() {
-	python3 --version | grep -q "$version" &> /dev/null
+	python3 --version 2>&1 | grep -q "$version" &> /dev/null
 }
 
 iscompat() {
@@ -31,10 +31,11 @@ build() {
 	# LIBRARY_PATH and CPATH environment variables.
 	#CFLAGS="-I$1/include" LDFLAGS="-L$1/lib"
 
-	make
+	make LDFLAGS="-Wl,-rpath=$LD_RUN_PATH"
 }
 
 installenv() {
+	cd "Python-${version}"
 	make DESTDIR="$2" install
 }
 

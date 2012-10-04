@@ -1,6 +1,6 @@
 
 version=1.6.1
-description="Python 3 Numpy version $version"
+description="Numpy Python library"
 depends=("dev/python3")
 
 isinstalled() {
@@ -12,7 +12,8 @@ iscompat() {
 }
 
 build() {
-	fetch_extract "http://downloads.sourceforge.net/numpy/numpy-${version}.tar.gz" \
+	fetch_extract \
+		"http://downloads.sourceforge.net/numpy/numpy-${version}.tar.gz" \
 		"788b1bc712ee566d4b4d62ef99736c5830fa264cbc56f8651ded1e795c755cdd"
 
 	cd "numpy-${version}"
@@ -21,6 +22,7 @@ build() {
 }
 
 installenv() {
+	cd "numpy-${version}"
 	python3 setup.py config_fc --fcompiler=gnu95 install --prefix="$1" --root="$2" --optimize=1
 }
 

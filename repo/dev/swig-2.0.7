@@ -1,0 +1,42 @@
+
+version=2.0.7
+description="SWIG"
+depends=()
+
+isinstalled() {
+	make -version | grep -q "$version" &> /dev/null
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://downloads.sourceforge.net/swig/swig-${version}.tar.gz" \
+		"ac1f29be405d78b3848c8ba76add2deffc2cdc166c9a1773eda7972ba3898967"
+
+	cd "swig-${version}"
+
+	fetch \
+		"${repo_url}/../support/patches/dev/swig-pyint_fromsize_t.diff" \
+		"c0c9ee84a94ed6b2d17fc3681b782d7da897b7d86235ed47e77de021b4c16e08"
+
+	fetch \
+		"${repo_url}/../support/patches/dev/swig-upstream_r13128.diff" \
+		"f8bbe8369148d4f38da53bdb5a4159b42b7fa2bc38a35342a7dea70eb4f3c3b1"
+
+	patch -Np1 -i swig-pyint_fromsize_t.diff
+	patch -Np1 -i swig-upstream_r13128.diff
+
+	./configure --prefix="$1"
+	
+	make
+}
+
+installenv() {
+	cd "swig-${version}"
+	make DESTDIR="$2" install
+}
+
+# vim: set ft=sh :

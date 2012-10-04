@@ -1,0 +1,10 @@
+
+metapkg=dev/python2-2.6.8
+version=2.6.8
+description="Metapackage for Python 2 [$metapkg]"
+
+satisfied() {
+	which python2 &> /dev/null
+}
+
+# vim: set ft=sh :
