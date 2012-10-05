@@ -28,7 +28,6 @@ build() {
 		--with-threads \
 		--with-computed-gotos \
 		--enable-ipv6 \
-		--with-valgrind \
 		--with-system-expat \
 		--with-dbmliborder=gdbm:ndbm \
 		--with-system-ffi
