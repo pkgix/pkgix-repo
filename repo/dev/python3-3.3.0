@@ -39,11 +39,11 @@ installenv() {
 	cd "Python-${version}"
 	make DESTDIR="$2" install maninstall
 
-	ln -sf python3               "${pkgdir}/usr/bin/python"
-	ln -sf python3-config        "${pkgdir}/usr/bin/python-config"
-	ln -sf idle3                 "${pkgdir}/usr/bin/idle"
-	ln -sf pydoc3                "${pkgdir}/usr/bin/pydoc"
-	ln -sf python${_pybasever}.1 "${pkgdir}/usr/share/man/man1/python3.1"
+	ln -sf python3               "$2/$1/bin/python"
+	ln -sf python3-config        "$2/$1/bin/python-config"
+	ln -sf idle3                 "$2/$1/bin/idle"
+	ln -sf pydoc3                "$2/$1/bin/pydoc"
+	ln -sf python${_pybasever}.1 "$2/$1/share/man/man1/python3.1"
 
 	ln -sf ../../libpython${_pybasever}m.so \
 		"$2/$1/lib/python${_pybasever}/config-${_pybasever}m/libpython${_pybasever}m.so"
