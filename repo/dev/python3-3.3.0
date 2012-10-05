@@ -18,7 +18,8 @@ iscompat() {
 
 build() {
 	fetch_extract \
-		"http://www.python.org/ftp/python/${version}/Python-${version}.tar.bz2"
+		"http://www.python.org/ftp/python/${version}/Python-${version}.tar.bz2" \
+		"15c113fd6c058712f05d31b4eff149d4d823b8e39ef5e37228dc5dc4f8716df9"
 
 	cd "Python-${version}"
 
