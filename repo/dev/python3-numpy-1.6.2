@@ -1,0 +1,31 @@
+
+version=1.6.2
+description="Numpy Python library"
+depends=("dev/python3")
+website="http://numpy.scipy.org"
+license=('BSD-new')
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://downloads.sourceforge.net/numpy/numpy-${version}.tar.gz" \
+		"0b83d96ab79711b548470b7aeee1272c4ba8fcbba6586a67116b566a21ed16c6"
+
+	cd "numpy-${version}"
+
+	Atlas=None LDFLAGS="-Wl,-rpath=$LD_RUN_PATH -shared" python3 setup.py config_fc --fcompiler=gnu95 build
+}
+
+installenv() {
+	cd "numpy-${version}"
+	python3 setup.py config_fc --fcompiler=gnu95 install --prefix="$1" --root="$2" --optimize=1
+}
+
+# vim: set ft=sh :

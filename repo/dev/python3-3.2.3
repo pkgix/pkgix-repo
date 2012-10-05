@@ -5,6 +5,8 @@ depends=("dev/gdbm")
 website="http://www.python.org"
 license=('PSF')
 
+_pybasever="${version%.*}"
+
 isinstalled() {
 	python3 --version 2>&1 | grep -q "$version" &> /dev/null
 }
@@ -27,7 +29,15 @@ build() {
 
 	patch -Np1 < _posixmodule.patch
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1"
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1" \
+		--enable-shared \
+		--with-threads \
+		--with-computed-gotos \
+		--enable-ipv6 \
+		--with-wide-unicode \
+		--with-system-expat \
+		--with-dbmliborder=gdbm:ndbm \
+		--with-system-ffi
 
 	make 
 }
@@ -35,6 +45,15 @@ build() {
 installenv() {
 	cd "Python-${version}"
 	make DESTDIR="$2" install
+
+	ln -sf python3               "$2/$1/bin/python"
+	ln -sf python3-config        "$2/$1/bin/python-config"
+	ln -sf idle3                 "$2/$1/bin/idle"
+	ln -sf pydoc3                "$2/$1/bin/pydoc"
+	ln -sf python${_pybasever}.1 "$2/$1/share/man/man1/python3.1"
+
+	ln -sf ../../libpython${_pybasever}mu.so \
+		"$2/$1/lib/python${_pybasever}/config-${_pybasever}mu/libpython${_pybasever}mu.so"
 }
 
 # vim: set ft=sh :
