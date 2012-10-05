@@ -2,6 +2,8 @@
 version=4.4.7
 description="The GCC compiler"
 depends=()
+website="http://gcc.gnu.org/"
+license=('GPL' 'LGPL' 'FDL' 'custom')
 
 isinstalled() {
 	gcc --version | grep -q "$version" &> /dev/null
@@ -17,7 +19,7 @@ build() {
 
 	cd "gcc-${version}"
 
-	./configure \
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure \
 		--prefix="$1" \
 		--mandir="$1/share/man" \
 		--infodir="$1/share/info" \

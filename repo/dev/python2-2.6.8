@@ -1,8 +1,12 @@
 # Based on: http://aur.archlinux.org/packages/py/python26/PKGBUILD
 
 version=2.6.8
-description="Python version $version"
+description="The Python 2 interpreter"
 depends=("dev/gdbm")
+website="http://www.python.org"
+license=('PSF')
+
+_pybasever="${version%.*}"
 
 isinstalled() {
 	python2 --version 2>&1 | grep -q "$version" &> /dev/null
@@ -13,7 +17,6 @@ iscompat() {
 }
 
 build() {
-	return 0
 	fetch_extract \
 		"http://www.python.org/ftp/python/${version}/Python-${version}.tar.bz2" \
 		"c34036718ee1f091736677f543bc7960861cf9fcbea77d49572b59f7f1ab3c3f"
@@ -31,19 +34,15 @@ build() {
 	patch -Np0 -i python-support_bdb-4.8.patch
 	patch -Np0 -i python-2.6-internal-expat.patch
 
-	# Use system libraries
-	rm -r Modules/expat
-	rm -r Modules/zlib
-
-	./configure --prefix="$1" --enable-shared --with-threads --enable-ipv6 \
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1" --enable-shared --with-threads --enable-ipv6 \
                 --enable-unicode=ucs4 --with-system-ffi
 
 	case "$platform" in
 		*linux*)
-			make LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" MACHDEP=linux2
+			make MACHDEP=linux2
 			;;
 		*)
-			make LDFLAGS="-Wl,-rpath=$LD_RUN_PATH"
+			make
 			;;
 	esac
 }
@@ -52,7 +51,22 @@ installenv() {
 	cd "Python-${version}"
 	make DESTDIR="$2" altinstall maninstall
 
-	ln -s python2.6 "$2/$1/bin/python2"
+	ln -sf python${_pybasever} "$2/$1/bin/python2"
+
+	ln -sf ../../libpython${_pybasever}.so \
+		"$2/$1/lib/python${_pybasever}/config/libpython${_pybasever}.so"
+
+	mv "$2/$1/bin/smtpd.py" "$2/$1/lib/python${_pybasever}/"
+
+	# fix conflicts with python
+	mv "$2/$1"/bin/idle{,${_pybasever}}
+	mv "$2/$1"/bin/pydoc{,${_pybasever}}
+	mv "$2/$1"/bin/2to3{,-${_pybasever}}
+	mv "$2/$1"/share/man/man1/python{.1,${_pybasever}.1}
+
+	# clean up #!s
+	find "$2/$1/lib/python${_pybasever}/" -name '*.py' | \
+		xargs sed -i "s|#[ ]*![ ]*/usr/bin/env python$|#!/usr/bin/env python${_pybasever}|"
 }
 
 # vim: set ft=sh :

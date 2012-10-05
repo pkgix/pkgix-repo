@@ -2,6 +2,8 @@
 version=3.80
 description="GNU Make"
 depends=()
+website="http://www.gnu.org/software/automake"
+license=('GPL')
 
 isinstalled() {
 	make -version | grep -q "$version" &> /dev/null
@@ -17,7 +19,7 @@ build() {
 
 	cd "make-${version}"
 
-	./configure --prefix="$1"
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1"
 	
 	make
 }

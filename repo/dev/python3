@@ -1,6 +1,6 @@
 
-metapkg=dev/python3-3.2.3
-version=3.2.3
+version=3.3.0
+metapkg=dev/python3-$version
 description="Metapackage for Python 3"
 
 satisfied() {

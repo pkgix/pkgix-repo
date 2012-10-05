@@ -2,6 +2,8 @@
 version=2.0.4
 description="SWIG"
 depends=()
+website="http://www.swig.org"
+license=('http://www.swig.org/Release/LICENSE')
 
 isinstalled() {
 	make -version | grep -q "$version" &> /dev/null

@@ -1,0 +1,61 @@
+# Based on: https://projects.archlinux.org/svntogit/packages.git/tree/trunk/PKGBUILD?h=packages/python2
+
+version=2.7.3
+description="The Python 2 interpreter"
+depends=("dev/gdbm")
+website="http://www.python.org"
+license=('PSF')
+
+_pybasever="${version%.*}"
+
+isinstalled() {
+	python2 --version 2>&1 | grep -q "$version" &> /dev/null
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://www.python.org/ftp/python/${version}/Python-${version}.tar.bz2" \
+		"726457e11cb153adc3f428aaf1901fc561a374c30e5e7da6742c0742a338663c"
+
+	cd "Python-${version}"
+
+	# See http://bugs.python.org/issue10835 for upstream report
+	sed -i "/progname =/s/python/python${_pybasever}/" Python/pythonrun.c
+
+	# Enable built-in SQLite module to load extensions
+	sed -i "/SQLITE_OMIT_LOAD_EXTENSION/d" setup.py
+
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1" --enable-shared --with-threads --enable-ipv6 \
+	            --enable-unicode=ucs4 --with-system-expat --with-system-ffi \
+	            --with-dbmliborder=gdbm:ndbm
+
+	make 
+}
+
+installenv() {
+	cd "Python-${version}"
+	make DESTDIR="$2" altinstall maninstall
+
+	ln -sf python${_pybasever} "$2/$1/bin/python2"
+
+	ln -sf ../../libpython${_pybasever}.so \
+		"$2/$1/lib/python${_pybasever}/config/libpython${_pybasever}.so"
+
+	mv "$2/$1/bin/smtpd.py" "$2/$1/lib/python${_pybasever}/"
+
+	# fix conflicts with python
+	mv "$2/$1"/bin/idle{,${_pybasever}}
+	mv "$2/$1"/bin/pydoc{,${_pybasever}}
+	mv "$2/$1"/bin/2to3{,-${_pybasever}}
+	mv "$2/$1"/share/man/man1/python{.1,${_pybasever}.1}
+
+	# clean up #!s
+	find "$2/$1/lib/python${_pybasever}/" -name '*.py' | \
+		xargs sed -i "s|#[ ]*![ ]*/usr/bin/env python$|#!/usr/bin/env python${_pybasever}|"
+}
+
+# vim: set ft=sh :

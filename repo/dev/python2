@@ -1,7 +1,7 @@
 
-metapkg=dev/python2-2.6.8
-version=2.6.8
-description="Metapackage for Python 2 [$metapkg]"
+version=2.7.3
+metapkg=dev/python2-$version
+description="Metapackage for Python 2"
 
 satisfied() {
 	which python2 &> /dev/null

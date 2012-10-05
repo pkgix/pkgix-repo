@@ -2,6 +2,8 @@
 version=2.2.0
 description="Scons build system $version"
 depends=("dev/python2")
+website="http://scons.org"
+license=('MIT')
 
 isinstalled() {
 	return 1

@@ -2,6 +2,8 @@
 version=1.6.1
 description="Numpy Python library"
 depends=("dev/python3")
+website="http://numpy.scipy.org"
+license=('BSD-new')
 
 isinstalled() {
 	return 1
@@ -18,7 +20,7 @@ build() {
 
 	cd "numpy-${version}"
 
-	Atlas=None LDFLAGS="-shared" python3 setup.py config_fc --fcompiler=gnu95 build
+	Atlas=None LDFLAGS="-Wl,-rpath=$LD_RUN_PATH -shared" python3 setup.py config_fc --fcompiler=gnu95 build
 }
 
 installenv() {

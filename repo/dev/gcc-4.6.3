@@ -3,6 +3,8 @@
 version=4.6.3
 description="The GCC compiler version $version"
 depends=()
+website="http://gcc.gnu.org/"
+license=('GPL' 'LGPL' 'FDL' 'custom')
 
 isinstalled() {
 	gcc --version | grep -q "$version" &> /dev/null
@@ -33,7 +35,7 @@ build() {
 	# Do not run fixincludes
 	sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
 
-	./configure --prefix="$1" \
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1" \
       --libdir="$1/lib" --libexecdir="$1/lib" \
       --mandir="$1/share/man" --infodir="$1/share/info" \
       --enable-languages=c,c++,fortran \

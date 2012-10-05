@@ -2,6 +2,8 @@
 version=1.10
 description="GNU dbm"
 depends=()
+website="http://www.gnu.org/software/gdbm/gdbm.html"
+license=('GPL')
 
 isinstalled() {
 	local gdbmpath
@@ -36,7 +38,7 @@ build() {
 
 	cd "gdbm-${version}"
 
-	./configure --prefix="$1"
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1"
 	make
 }
 
