@@ -1,0 +1,34 @@
+
+version=8.31
+description="Perl style regular expressions library"
+depends=()
+website="http://www.pcre.org"
+license=('BSD')
+
+isinstalled() {
+	pcre-config --version | grep -q "$version" &> /dev/null
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${version}.tar.bz2" \
+		"5778a02535473c7ee7838ea598c19f451e63cf5eec0bf0307a688301c9078c3c"
+
+	cd "pcre-${version}"
+
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1" --enable-pcre16 --enable-jit \
+		--enable-utf8 --enable-unicode-properties
+
+	make
+}
+
+installenv() {
+	cd "pcre-${version}"
+	make DESTDIR="$2" install
+}
+
+# vim: set ft=sh :

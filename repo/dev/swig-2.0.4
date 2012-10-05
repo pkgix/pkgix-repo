@@ -1,12 +1,12 @@
 
 version=2.0.4
 description="SWIG"
-depends=()
+depends=('dev/pcre')
 website="http://www.swig.org"
 license=('http://www.swig.org/Release/LICENSE')
 
 isinstalled() {
-	make -version | grep -q "$version" &> /dev/null
+	swig -version | grep -q "$version" &> /dev/null
 }
 
 iscompat() {
@@ -20,7 +20,7 @@ build() {
 
 	cd "swig-${version}"
 
-	./configure --prefix="$1"
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1"
 	
 	make
 }
