@@ -1,0 +1,49 @@
+
+version=1.0.1
+description="libmpc"
+depends=('dev/mpfr')
+website="http://www.multiprecision.org"
+license=('LGPL')
+
+isinstalled() {
+	local headerpath
+	local old_IFS="$IFS"
+	IFS=":"
+
+	# Check all the common paths
+	for path in ${CPATH[@]} /include /usr/include; do
+		if [[ -f "$path/mpc.h" ]]; then
+			headerpath="$path/mpc.h"
+			break
+		fi
+	done
+	IFS="$old_IFS"
+
+	if [[ -z "$headerpath" ]]; then
+		return 1
+	else
+		grep -q "MPC_VERSION_STRING \"${version}\"$" "$headerpath"
+	fi
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://www.multiprecision.org/mpc/download/mpc-${version}.tar.gz" \
+		"ed5a815cfea525dc778df0cb37468b9c1b554aaf30d9328b1431ca705b7400ff"
+
+	cd "mpc-${version}"
+
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1"
+	make
+}
+
+installenv() {
+	cd "mpc-${version}"
+	make DESTDIR="$2" install
+}
+
+# vim: set ft=sh :

@@ -6,7 +6,7 @@ website="http://gcc.gnu.org/"
 license=('GPL' 'LGPL' 'FDL' 'custom')
 
 isinstalled() {
-	gcc --version | grep -q "$version" &> /dev/null
+	gcc --version | grep -q " $version " &> /dev/null
 }
 
 iscompat() {

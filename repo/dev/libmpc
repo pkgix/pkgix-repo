@@ -1,0 +1,23 @@
+
+metapkg=dev/libmpc-1.0.1
+version=1.0.1
+description="Metapackage for libmpc"
+
+satisfied() {
+	local headerpath
+	local old_IFS="$IFS"
+	IFS=":"
+
+	# Check all the common paths
+	for path in ${CPATH[@]} /include /usr/include; do
+		if [[ -f "$path/mpc.h" ]]; then
+			headerpath="$path/mpc.h"
+			break
+		fi
+	done
+	IFS="$old_IFS"
+
+	[[ -n "$headerpath" ]]
+}
+
+# vim: set ft=sh :

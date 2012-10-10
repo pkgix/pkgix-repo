@@ -1,13 +1,13 @@
 # Based on: http://aur.archlinux.org/packages/gc/gcc46/PKGBUILD
 
 version=4.6.3
-description="The GCC compiler version $version"
-depends=()
+description="The GCC compiler"
+depends=('dev/gmp' 'dev/mpfr' 'dev/libmpc')
 website="http://gcc.gnu.org/"
 license=('GPL' 'LGPL' 'FDL' 'custom')
 
 isinstalled() {
-	gcc --version | grep -q "$version" &> /dev/null
+	gcc --version | grep -q " $version " &> /dev/null
 }
 
 iscompat() {
@@ -29,6 +29,21 @@ build() {
 
 	cd "gcc-${version}"
 
+	fetch \
+		"${repo_url}/../support/patches/dev/gcc-hash-style-both.patch" \
+		"3492332fa78b545ff46c2b5293d17c63c122be6f8f6fa4798864b7d4572b0024"
+
+	# Only apply pure64 patch, if system we are running on is pure
+	if [[ ! -d "/usr/lib64" && "$(uname -m)" == "x86_64" ]]; then
+		fetch \
+			"${repo_url}/../support/patches/dev/gcc42_pure64.patch" \
+			"2d369cf93c6e15c3559c3560bce581e0ae5f1f34dc86bca013ac67ef1c1a9ff9"
+
+		patch -Np1 -i gcc42_pure64.patch
+	fi
+
+	patch -Np0 -i gcc-hash-style-both.patch
+
 	# Do not install libiberty
 	sed -i 's/install_to_$(INSTALL_DEST) //' libiberty/Makefile.in
 
@@ -36,30 +51,35 @@ build() {
 	sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
 
 	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1" \
-      --libdir="$1/lib" --libexecdir="$1/lib" \
-      --mandir="$1/share/man" --infodir="$1/share/info" \
-      --enable-languages=c,c++,fortran \
-      --enable-shared --enable-threads=posix \
-      --with-system-zlib --enable-__cxa_atexit \
-      --enable-clocale=gnu \
-      --enable-gnu-unique-object \
-      --with-ppl \
-      --enable-lto --enable-plugin \
-      --enable-gold --with-plugin-ld=ld.gold \
-      --disable-multilib --disable-libstdcxx-pch \
-      --disable-libunwind-exceptions \
-      --enable-linker-build-id \
-      --enable-cloog-backend=isl \
-      --enable-ld=default \
-      --enable-checking=release --disable-werror \
-      --enable-version-specific-runtime-libs
+		--libdir="$1/lib" --libexecdir="$1/lib" \
+		--mandir="$1/share/man" --infodir="$1/share/info" \
+		--enable-languages=c,c++,fortran \
+		--enable-shared --enable-threads=posix \
+		--with-system-zlib --enable-__cxa_atexit \
+		--enable-clocale=gnu \
+		--enable-gnu-unique-object \
+		--with-ppl \
+		--enable-lto --enable-plugin \
+		--enable-gold --with-plugin-ld=ld.gold \
+		--disable-multilib --disable-libstdcxx-pch \
+		--disable-libunwind-exceptions \
+		--enable-linker-build-id \
+		--enable-cloog-backend=isl \
+		--enable-ld=default \
+		--enable-checking=release --disable-werror #\
+		#--enable-version-specific-runtime-libs
 
 	make
 }
 
 installenv() {
 	cd "gcc-${version}"
+
 	make -j1 DESTDIR="$2" install
+
+	# Move gcc_s to version-specific folder (--enable-version-specific-runtime-libs)
+	#target_subdir="$(grep '^TARGET_SUBDIR =' Makefile | sed 's:^.*= *::')"
+	#mv "$2/$1"/lib/gcc/$target_subdir/lib*/* "$2/$1/lib/gcc/$target_subdir/$version/"
 }
 
 # vim: set ft=sh :

@@ -1,0 +1,51 @@
+
+version=5.0.5
+description="GMP"
+depends=()
+website="http://gmplib.org"
+license=('LGPL3')
+
+isinstalled() {
+	local headerpath
+	local old_IFS="$IFS"
+	IFS=":"
+
+	# Check all the common paths
+	for path in ${CPATH[@]} /include /usr/include; do
+		if [[ -f "$path/gmp.h" ]]; then
+			headerpath="$path/gmp.h"
+			break
+		fi
+	done
+	IFS="$old_IFS"
+
+	if [[ -z "$headerpath" ]]; then
+		return 1
+	else
+		grep -q '__GNU_MP_VERSION 5$' "$headerpath" &&
+			grep -q '__GNU_MP_VERSION_MINOR 0$' "$headerpath" &&
+			grep -q '__GNU_MP_VERSION_PATCHLEVEL 5$' "$headerpath"
+	fi
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"ftp://ftp.gnu.org/gnu/gmp/gmp-${version}.tar.xz" \
+		"e87015a825a2445e169931ee27849d52576a2d9e338d1383dcb36fed68d0006f"
+
+	cd "gmp-${version}"
+
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1" --enable-cxx
+	make
+}
+
+installenv() {
+	cd "gmp-${version}"
+	make DESTDIR="$2" install
+}
+
+# vim: set ft=sh :

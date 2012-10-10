@@ -1,0 +1,27 @@
+
+metapkg=dev/gmp-5.0.5
+version=5.0.5
+description="Metapackage for GMP 5"
+
+satisfied() {
+	local headerpath
+	local old_IFS="$IFS"
+	IFS=":"
+
+	# Check all the common paths
+	for path in ${CPATH[@]} /include /usr/include; do
+		if [[ -f "$path/gmp.h" ]]; then
+			headerpath="$path/gmp.h"
+			break
+		fi
+	done
+	IFS="$old_IFS"
+
+	if [[ -z "$headerpath" ]]; then
+		return 1
+	else
+		grep -q '__GNU_MP_VERSION 5$' "$headerpath"
+	fi
+}
+
+# vim: set ft=sh :
