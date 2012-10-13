@@ -37,13 +37,13 @@ build() {
 
 	cd "mpc-${version}"
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1"
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}"
 	make
 }
 
 installenv() {
 	cd "mpc-${version}"
-	make DESTDIR="$2" install
+	make DESTDIR="${destdir}" install
 }
 
 # vim: set ft=sh :

@@ -20,7 +20,7 @@ build() {
 
 	cd "pcre-${version}"
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1" --enable-pcre16 --enable-jit \
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}" --enable-pcre16 --enable-jit \
 		--enable-utf8 --enable-unicode-properties
 
 	make
@@ -28,7 +28,7 @@ build() {
 
 installenv() {
 	cd "pcre-${version}"
-	make DESTDIR="$2" install
+	make DESTDIR="${destdir}" install
 }
 
 # vim: set ft=sh :

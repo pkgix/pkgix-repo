@@ -43,13 +43,13 @@ build() {
 
 	patch -Np1 -i mpfr-3.1.1-allpatches.patch
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1" --enable-thread-safe --enable-shared
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}" --enable-thread-safe --enable-shared
 	make
 }
 
 installenv() {
 	cd "mpfr-${version}"
-	make DESTDIR="$2" install
+	make DESTDIR="${destdir}" install
 }
 
 # vim: set ft=sh :

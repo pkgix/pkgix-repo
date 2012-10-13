@@ -39,13 +39,13 @@ build() {
 
 	cd "gmp-${version}"
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1" --enable-cxx
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}" --enable-cxx
 	make
 }
 
 installenv() {
 	cd "gmp-${version}"
-	make DESTDIR="$2" install
+	make DESTDIR="${destdir}" install
 }
 
 # vim: set ft=sh :

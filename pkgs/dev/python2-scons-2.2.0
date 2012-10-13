@@ -22,13 +22,13 @@ build() {
 installenv() {
 	cd "scons-$version"
 	python2 setup.py install --standard-lib \
-	                         --prefix="$1" \
-	                         --install-data="$1/share" \
+	                         --prefix="${prefix}" \
+	                         --install-data="${prefix}/share" \
 	                         --optimize=1 \
-	                         --root="$2"
+	                         --root="${destdir}"
 
 	sed -i 's:^#!.*bin/env python:#!/usr/bin/env python2:' \
-		"$2/$1/bin"/*
+		"${destdir}/${prefix}/bin"/*
 }
 
 # vim: set ft=sh :

@@ -20,11 +20,11 @@ build() {
 	cd "gcc-${version}"
 
 	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure \
-		--prefix="$1" \
-		--mandir="$1/share/man" \
-		--infodir="$1/share/info" \
-		--libdir="$1/lib" \
-		--libexecdir="$1/lib" \
+		--prefix="${prefix}" \
+		--mandir="${prefix}/share/man" \
+		--infodir="${prefix}/share/info" \
+		--libdir="${prefix}/lib" \
+		--libexecdir="${prefix}/lib" \
 		--enable-shared \
 		--enable-languages=c,c++,fortran,objc,obj-c++ \
 		--enable-__cxa_atexit \
@@ -44,7 +44,7 @@ build() {
 
 installenv() {
 	cd "gcc-${version}"
-	make DESTDIR="$2" install
+	make DESTDIR="${destdir}" install
 }
 
 # vim: set ft=sh :

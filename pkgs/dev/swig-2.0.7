@@ -31,14 +31,14 @@ build() {
 	patch -Np1 -i swig-pyint_fromsize_t.diff
 	patch -Np1 -i swig-upstream_r13128.diff
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1"
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}"
 	
 	make
 }
 
 installenv() {
 	cd "swig-${version}"
-	make DESTDIR="$2" install
+	make DESTDIR="${destdir}" install
 }
 
 # vim: set ft=sh :

@@ -50,9 +50,9 @@ build() {
 	# Do not run fixincludes
 	sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="$1" \
-		--libdir="$1/lib" --libexecdir="$1/lib" \
-		--mandir="$1/share/man" --infodir="$1/share/info" \
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}" \
+		--libdir="${prefix}/lib" --libexecdir="${prefix}/lib" \
+		--mandir="${prefix}/share/man" --infodir="${prefix}/share/info" \
 		--enable-languages=c,c++,fortran \
 		--enable-shared --enable-threads=posix \
 		--with-system-zlib --enable-__cxa_atexit \
@@ -75,11 +75,11 @@ build() {
 installenv() {
 	cd "gcc-${version}"
 
-	make -j1 DESTDIR="$2" install
+	make -j1 DESTDIR="${destdir}" install
 
 	# Move gcc_s to version-specific folder (--enable-version-specific-runtime-libs)
 	#target_subdir="$(grep '^TARGET_SUBDIR =' Makefile | sed 's:^.*= *::')"
-	#mv "$2/$1"/lib/gcc/$target_subdir/lib*/* "$2/$1/lib/gcc/$target_subdir/$version/"
+	#mv "${destdir}/${prefix}"/lib/gcc/$target_subdir/lib*/* "${destdir}/${prefix}/lib/gcc/$target_subdir/$version/"
 }
 
 # vim: set ft=sh :
