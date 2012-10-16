@@ -37,7 +37,7 @@ build() {
 	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}" --enable-shared --with-threads --enable-ipv6 \
                 --enable-unicode=ucs4 --with-system-ffi
 
-	case "$platform" in
+	case "$ostype" in
 		*linux*)
 			make MACHDEP=linux2
 			;;
