@@ -1,0 +1,35 @@
+
+version=1.7.2.1
+description="Socat -- Multipurpose relay"
+depends=()
+website="http://www.dest-unreach.org/socat"
+license=('GPL2')
+
+isinstalled() {
+	socat -V | grep -q "$version" &> /dev/null
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://www.dest-unreach.org/socat/download/socat-${version}.tar.gz" \
+		"84a741bb6c2673836bff90dbeb4a222afa0f8ebaeab6d2f7ea5b0a286a6e4c46"
+
+	cd "socat-${version}"
+
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure \
+		--prefix="${prefix}" \
+		--mandir="${prefix}/share/man"
+	
+	make
+}
+
+installenv() {
+	cd "socat-${version}"
+	make DESTDIR="${destdir}" install
+}
+
+# vim: set ft=sh :
