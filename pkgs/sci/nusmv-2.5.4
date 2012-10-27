@@ -1,0 +1,44 @@
+# Based on: http://aur.archlinux.org/packages/nu/nusmv/PKGBUILD
+
+version=2.5.4
+description="New Symbolic Model Checker"
+depends=()
+license=('LGPLv2.1')
+website="http://nusmv.fbk.eu"
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://nusmv.fbk.eu/distrib/NuSMV-${version}.tar.gz" \
+		"3c250624cba801b1f62f50733f9507b0f3b3ca557ce1cd65956178eb273f1bdf"
+
+    cd NuSMV-${version}/cudd-*
+
+    if [[ "$architecture" == "x86_64" ]]; then
+      mv Makefile Makefile_32bit
+      cp Makefile_64bit Makefile
+    fi
+
+    LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" make
+
+    cd ../nusmv
+
+    LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}"
+    make
+}
+
+installenv() {
+	cd "NuSMV-${version}/nusmv"
+
+    install -D -m755 "NuSMV" "${destdir}/${prefix}/bin/NuSMV"
+	ln -s "NuSMV" "${destdir}/${prefix}/bin/nusmv"
+}
+
+# vim: set ft=sh:
