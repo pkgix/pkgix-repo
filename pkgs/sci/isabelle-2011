@@ -1,0 +1,86 @@
+
+version=2011-1
+description="Isabelle proof assistant"
+_polyml_isabelle="5.4.1"
+_polyml_version="5.5" # The version we want to use
+depends=("dev/polyml-$_polyml_version")
+license=('BSD')
+website="http://www.cl.cam.ac.uk/research/hvg/Isabelle/"
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://isabelle.in.tum.de/website-Isabelle2011-1/dist/Isabelle${version}.tar.gz" \
+		"48d77fe31a16b44f6015aa7953a60bdad8fcec9e60847630dc7b98c053edfc08"
+
+	fetch_extract \
+		"http://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/contrib/polyml-${_polyml_isabelle}.tar.gz" \
+		"062d69e86b64fc69d56096bed1c295038bccacbe40a63ad38c8165c974e00b6e"
+
+	isabelle_platform="$(bash -c '
+		source Isabelle'"$version"'/lib/scripts/isabelle-platform
+		echo ${ISABELLE_PLATFORM64:-$ISABELLE_PLATFORM}')"
+
+	cd "polyml-${_polyml_isabelle}/sha1"
+	./build $isabelle_platform
+
+	cd "../../Isabelle$version"
+
+	mkdir -p contrib/polyml
+	cp "../polyml-${_polyml_isabelle}/sha1/${isabelle_platform}/libsha1.so" contrib/polyml/
+
+	cp "../polyml-${_polyml_isabelle}/${isabelle_platform}/polyml" contrib/polyml/
+
+	for x in poly polyimport; do
+		cat > contrib/polyml/$x <<EOF
+#!/bin/sh
+exec "$(which $x)" "\$@"
+EOF
+		chmod +x contrib/polyml/$x
+	done
+
+	cat >> etc/settings <<EOF
+
+# Poly/ML installation in '${prefix}'
+ML_PLATFORM="\${ISABELLE_PLATFORM64:-\$ISABELLE_PLATFORM}"
+ML_SYSTEM=polyml-${_polyml_version}
+ML_OPTIONS="-H 500"
+EOF
+
+	cp etc/settings etc/settings.bak
+
+	echo "ML_HOME=\"$(pwd)/contrib/polyml\"" >> etc/settings
+	./build -b Pure HOL
+
+	mv etc/settings.bak etc/settings
+	echo "ML_HOME=\"${prefix}/opt/Isabelle${version}/contrib/polyml\"" >> etc/settings
+}
+
+installenv() {
+	mkdir -p \
+		"${destdir}/${prefix}/bin" \
+		"${destdir}/${prefix}/opt" \
+
+	cp -a "Isabelle$version" "${destdir}/${prefix}/opt/Isabelle$version"
+
+	cat > isabelle <<EOF
+#!/bin/sh
+exec "${prefix}/opt/Isabelle${version}/bin/isabelle" "\$@"
+EOF
+
+	cat > isabelle-process <<EOF
+#!/bin/sh
+exec "${prefix}/opt/Isabelle${version}/bin/isabelle-process" "\$@"
+EOF
+
+	install -D -m 0755 {isabelle,isabelle-process} "${destdir}/${prefix}/bin"
+}
+
+# vim: set ft=sh:

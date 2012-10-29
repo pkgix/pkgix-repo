@@ -1,0 +1,36 @@
+# Maintainer: Marco Elver <me AT marcoelver.com>
+
+version=1.0
+description="TLA+ Proof System"
+depends=('dev/ocaml-3.12' 'sci/zenon-0.7' 'sci/isabelle-2011')
+license=('BSD')
+website="http://msr-inria.inria.fr/~doligez/tlaps/content/Home.html"
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://msr-inria.inria.fr/~doligez/tlaps/dist/current/tlaps-1.0.tar.gz" \
+		"8af352c135a3c6ef2ee376926588272ad865419726bd13673d8b3d6dd315a693"
+
+    cd tlaps-${version}*/
+
+	cd isabelle
+	make || return 1
+
+	cd ../tlapm
+	./configure --prefix "$prefix" && make all
+}
+
+installenv() {
+    cd tlaps-${version}*/tlapm
+	make prefix="${destdir}/${prefix}" install
+}
+
+# vim: set ft=sh:

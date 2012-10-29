@@ -1,0 +1,34 @@
+
+version=0.7.1
+description="The Zenon automatic theorem prover"
+depends=('sci/coq-8.4')
+license=('BSD')
+website="http://focal.inria.fr/zenon/"
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://focal.inria.fr/zenon/zenon-0.7.1.tar.xz" \
+		"0d3db37197dcd8eef559a28fec12e12e819ebcc79ad774b56bb74408971f3da9"
+
+	cd "zenon-$version"
+
+	./configure \
+		-prefix "$prefix" \
+		-tools_prefix "$prefix" \
+	&& make
+}
+
+installenv() {
+	cd "zenon-$version"
+	make DESTDIR="$destdir" install
+}
+
+# vim: set ft=sh:
