@@ -1,0 +1,35 @@
+
+version=6.2
+description="GNU readline"
+depends=()
+website="http://tiswww.case.edu/php/chet/readline/rltop.html"
+license=('GPL')
+forceinstall=('share/info/dir')
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	
+	fetch_extract \
+		"http://ftp.gnu.org/gnu/readline/readline-$version.tar.gz" \
+		"79a696070a058c233c72dd6ac697021cc64abd5ed51e59db867d66d196a89381"
+
+	cd "readline-${version}"
+	sed -i "s:^#define SYS_INPUTRC \"/etc/inputrc\":#define SYS_INPUTRC \"$prefix/etc/inputrc\":" rlconf.h
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}"
+	make SHLIB_LIBS=-lncurses
+}
+
+installenv() {
+	cd "readline-${version}"
+	make DESTDIR="${destdir}" install
+	install -Dm644 "${repo_url}/../support/etc/inputrc" "${destdir}/${prefix}/etc/inputrc"
+}
+
+# vim: set ft=sh :

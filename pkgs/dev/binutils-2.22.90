@@ -4,6 +4,7 @@ description="GNU Binutils"
 depends=()
 website="http://www.gnu.org/software/binutils"
 license=('GPL')
+forceinstall=('share/info/dir')
 
 isinstalled() {
 	ld --version | grep -q "$version"
