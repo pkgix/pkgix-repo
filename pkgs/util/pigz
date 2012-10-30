@@ -1,0 +1,10 @@
+
+metapkg=util/pigz-2.2.5
+version=2.2.5
+description="Metapackage for pigz"
+
+satisfied() {
+        which pigz &> /dev/null
+}
+
+# vim: set ft=sh :

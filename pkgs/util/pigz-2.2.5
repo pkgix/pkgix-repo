@@ -1,0 +1,33 @@
+
+version=2.2.5
+description="Parallel implementation of the gzip file compressor"
+depends=()
+website="http://www.zlib.net/pigz/"
+license=('custom')
+forceinstall=('share/info/dir')
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	
+	fetch_extract \
+		"http://www.zlib.net/pigz/pigz-${version}.tar.gz" \
+		"e37498cbf3a475d7ebe2519751188c29564bf8dd27ba68bd3c7fe1ac08792759"
+
+	cd "pigz-${version}"
+	make
+}
+
+installenv() {
+	cd "pigz-${version}"
+	install -Dm755 pigz "${destdir}/${prefix}/bin/pigz"
+	install -Dm755 unpigz "${destdir}/${prefix}/bin/unpigz"
+}
+
+# vim: set ft=sh :
