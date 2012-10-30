@@ -1,0 +1,23 @@
+
+metapkg=dev/readline-6.2
+version=6.2
+description="Metapackage for readline"
+
+satisfied() {
+	local headerpath
+	local old_IFS="$IFS"
+	IFS=":"
+
+	# Check all the common paths
+	for path in ${CPATH[@]} /include /usr/include; do
+		if [[ -f "$path/readline/readline.h" ]]; then
+			headerpath="$path/readline/readline.h"
+			break
+		fi
+	done
+	IFS="$old_IFS"
+
+	[[ -n "$headerpath" ]]
+}
+
+# vim: set ft=sh :

@@ -1,0 +1,32 @@
+
+version=1.0
+description="PPL"
+depends=(dev/gmp-5)
+website="http://bugseng.com/products/ppl"
+license=('GPL3')
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://bugseng.com/products/ppl/download/ftp/releases/${version}/ppl-${version}.tar.gz" \
+		"fd346687482ad51c1e98eb260bd61dd5a35a0cff5f580404380c88b0089a71b4"
+
+	cd "ppl-${version}"
+
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}" --enable-interfaces="c,cxx" --with-gmp="${prefix}"
+	make
+}
+
+installenv() {
+	cd "ppl-${version}"
+	make DESTDIR="${destdir}" install
+}
+
+# vim: set ft=sh :

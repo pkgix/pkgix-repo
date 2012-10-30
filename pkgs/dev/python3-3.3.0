@@ -2,7 +2,7 @@
 
 version=3.3.0
 description="The Python 3 interpreter"
-depends=("dev/gdbm")
+depends=("dev/gdbm" "dev/readline")
 website="http://www.python.org"
 license=('PSF')
 
