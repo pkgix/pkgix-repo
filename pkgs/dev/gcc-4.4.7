@@ -45,6 +45,7 @@ build() {
 installenv() {
 	cd "gcc-${version}"
 	make DESTDIR="${destdir}" install
+	ln -s gcc "${destdir}/${prefix}/bin/cc"
 }
 
 # vim: set ft=sh :

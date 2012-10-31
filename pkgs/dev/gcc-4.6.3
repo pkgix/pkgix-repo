@@ -76,6 +76,7 @@ installenv() {
 	cd "gcc-${version}"
 
 	make -j1 DESTDIR="${destdir}" install
+	ln -s gcc "${destdir}/${prefix}/bin/cc"
 
 	# Move gcc_s to version-specific folder (--enable-version-specific-runtime-libs)
 	#target_subdir="$(grep '^TARGET_SUBDIR =' Makefile | sed 's:^.*= *::')"
