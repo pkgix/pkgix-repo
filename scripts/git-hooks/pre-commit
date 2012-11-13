@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+AVAIL_FILE="pkgs/.avail"
+export PKGIX_REPO_URLS="$(pwd)/pkgs"
+pkgix avail > "$AVAIL_FILE"
+git add "$AVAIL_FILE"
+
