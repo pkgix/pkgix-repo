@@ -39,7 +39,7 @@ build() {
 	cd "mpfr-${version}"
 
 	fetch \
-		"$repo_url/../support/patches/dev/mpfr-3.1.1-allpatches.patch" \
+		"$repo/../support/patches/dev/mpfr-3.1.1-allpatches.patch" \
 		"1aeefe799d29bafde1ab6c889a8a0adb6597fec6bc10be761dc4e366bcecbec5"
 
 	patch -Np1 -i mpfr-3.1.1-allpatches.patch

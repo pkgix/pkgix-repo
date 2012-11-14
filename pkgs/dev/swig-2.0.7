@@ -21,11 +21,11 @@ build() {
 	cd "swig-${version}"
 
 	fetch \
-		"${repo_url}/../support/patches/dev/swig-pyint_fromsize_t.diff" \
+		"${repo}/../support/patches/dev/swig-pyint_fromsize_t.diff" \
 		"c0c9ee84a94ed6b2d17fc3681b782d7da897b7d86235ed47e77de021b4c16e08"
 
 	fetch \
-		"${repo_url}/../support/patches/dev/swig-upstream_r13128.diff" \
+		"${repo}/../support/patches/dev/swig-upstream_r13128.diff" \
 		"f8bbe8369148d4f38da53bdb5a4159b42b7fa2bc38a35342a7dea70eb4f3c3b1"
 
 	patch -Np1 -i swig-pyint_fromsize_t.diff

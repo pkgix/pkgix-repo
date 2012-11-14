@@ -23,7 +23,7 @@ build() {
 	# Only apply pure64 patch, if system we are running on is pure
 	if [[ ! -d "/usr/lib64" && "$architecture" == "x86_64" ]]; then
 		fetch \
-			"${repo_url}/../support/patches/dev/gcc42_pure64.patch" \
+			"${repo}/../support/patches/dev/gcc42_pure64.patch" \
 			"2d369cf93c6e15c3559c3560bce581e0ae5f1f34dc86bca013ac67ef1c1a9ff9"
 
 		patch -Np1 -i gcc42_pure64.patch
