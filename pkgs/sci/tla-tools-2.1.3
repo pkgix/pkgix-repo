@@ -22,34 +22,34 @@ build() {
 
 installenv() {
 	mkdir -p \
-		"${destdir}/${prefix}/bin" \
-		"${destdir}/${prefix}/share/java" \
-		"${destdir}/${prefix}/share/licenses/tla-tools"
+		"${destdir}/${prefix}/usr/bin" \
+		"${destdir}/${prefix}/usr/share/java" \
+		"${destdir}/${prefix}/usr/share/licenses/tla-tools"
 
-	cp -a "tla" "${destdir}/${prefix}/share/java/tla-tools"
+	cp -a "tla" "${destdir}/${prefix}/usr/share/java/tla-tools"
 
 	cat > pcal2tla <<EOF
 #!/bin/sh
-exec java -classpath "${prefix}/share/java/tla-tools" pcal.trans "\$@"
+exec java -classpath "${prefix}/usr/share/java/tla-tools" pcal.trans "\$@"
 EOF
 
 	cat > sany <<EOF
 #!/bin/sh
-exec java -classpath "${prefix}/share/java/tla-tools" tla2sany.SANY "\$@"
+exec java -classpath "${prefix}/usr/share/java/tla-tools" tla2sany.SANY "\$@"
 EOF
 
 	cat > tla2tex <<EOF
 #!/bin/sh
-exec java -classpath "${prefix}/share/java/tla-tools" tla2tex.TLA "\$@"
+exec java -classpath "${prefix}/usr/share/java/tla-tools" tla2tex.TLA "\$@"
 EOF
 
 	cat > tlc <<EOF
 #!/bin/sh
-exec java -classpath "${prefix}/share/java/tla-tools" tlc2.TLC "\$@"
+exec java -classpath "${prefix}/usr/share/java/tla-tools" tlc2.TLC "\$@"
 EOF
 
-	install -D -m 0755 {pcal2tla,sany,tla2tex,tlc} "${destdir}/${prefix}/bin"
-	install -D -m 0644 "tla/License.txt" "${destdir}/${prefix}/share/licenses/tla-tools/LICENSE"
+	install -D -m 0755 {pcal2tla,sany,tla2tex,tlc} "${destdir}/${prefix}/usr/bin"
+	install -D -m 0644 "tla/License.txt" "${destdir}/${prefix}/usr/share/licenses/tla-tools/LICENSE"
 }
 
 # vim: set ft=sh:

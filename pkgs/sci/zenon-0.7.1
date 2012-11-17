@@ -21,8 +21,8 @@ build() {
 	cd "zenon-$version"
 
 	./configure \
-		-prefix "$prefix" \
-		-tools_prefix "$prefix" \
+		-prefix "${prefix}/usr" \
+		-tools_prefix "${prefix}/usr" \
 	&& make
 }
 

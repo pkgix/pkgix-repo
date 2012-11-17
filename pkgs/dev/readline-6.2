@@ -44,8 +44,8 @@ build() {
 		"${repo}/../support/etc/inputrc" \
 		"36e9611f935ee108d161587b0615f9c390192ef4bbff6dc59b58671261029901"
 
-	sed -i "s:^#define SYS_INPUTRC \"/etc/inputrc\":#define SYS_INPUTRC \"$prefix/etc/inputrc\":" rlconf.h
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}"
+	sed -i "s:^#define SYS_INPUTRC \"/etc/inputrc\":#define SYS_INPUTRC \"${prefix}/etc/inputrc\":" rlconf.h
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr"
 	make SHLIB_LIBS=-lncurses
 }
 

@@ -21,8 +21,8 @@ build() {
 	cd "socat-${version}"
 
 	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure \
-		--prefix="${prefix}" \
-		--mandir="${prefix}/share/man"
+		--prefix="${prefix}/usr" \
+		--mandir="${prefix}/usr/share/man"
 	
 	make
 }

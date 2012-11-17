@@ -37,9 +37,9 @@ build() {
 	# Do not run fixincludes
 	sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}" \
-		--libdir="${prefix}/lib" --libexecdir="${prefix}/lib" \
-		--mandir="${prefix}/share/man" --infodir="${prefix}/share/info" \
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr" \
+		--libdir="${prefix}/usr/lib" --libexecdir="${prefix}/usr/lib" \
+		--mandir="${prefix}/usr/share/man" --infodir="${prefix}/usr/share/info" \
 		--enable-languages=c,c++,fortran \
 		--enable-shared --enable-threads=posix \
 		--with-system-zlib --enable-__cxa_atexit \
@@ -62,7 +62,7 @@ installenv() {
 	cd "gcc-${version}"
 
 	make -j1 DESTDIR="${destdir}" install
-	ln -s gcc "${destdir}/${prefix}/bin/cc"
+	ln -s gcc "${destdir}/${prefix}/usr/bin/cc"
 }
 
 # vim: set ft=sh :

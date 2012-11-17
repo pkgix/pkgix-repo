@@ -25,12 +25,12 @@ build() {
 	make || return 1
 
 	cd ../tlapm
-	./configure --prefix "$prefix" && make all
+	./configure --prefix "${prefix}/usr" && make all
 }
 
 installenv() {
     cd tlaps-${version}*/tlapm
-	make prefix="${destdir}/${prefix}" install
+	make prefix="${destdir}/${prefix}/usr" install
 }
 
 # vim: set ft=sh:

@@ -31,7 +31,7 @@ build() {
 	patch -Np1 -i swig-pyint_fromsize_t.diff
 	patch -Np1 -i swig-upstream_r13128.diff
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}"
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr"
 	
 	make
 }

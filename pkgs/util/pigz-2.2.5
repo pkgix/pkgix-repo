@@ -26,8 +26,8 @@ build() {
 
 installenv() {
 	cd "pigz-${version}"
-	install -Dm755 pigz "${destdir}/${prefix}/bin/pigz"
-	install -Dm755 unpigz "${destdir}/${prefix}/bin/unpigz"
+	install -Dm755 pigz "${destdir}/${prefix}/usr/bin/pigz"
+	install -Dm755 unpigz "${destdir}/${prefix}/usr/bin/unpigz"
 }
 
 # vim: set ft=sh :

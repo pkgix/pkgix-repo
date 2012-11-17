@@ -21,17 +21,17 @@ build() {
 
 	cd "ocaml-${version}"
 
-	./configure -prefix "$prefix"
+	./configure -prefix "${prefix}/usr"
 	make world.opt
 }
 
 installenv() {
 	cd "ocaml-${version}"
-	make PREFIX="${destdir}/${prefix}" MANDIR="${destdir}/${prefix}/share/man" install
+	make PREFIX="${destdir}/${prefix}/usr" MANDIR="${destdir}/${prefix}/usr/share/man" install
 
 	# install license
-	install -m755 -d "${destdir}/${prefix}/share/licenses/ocaml"
-	install -m644 LICENSE "${destdir}/${prefix}/share/licenses/ocaml/"
+	install -m755 -d "${destdir}/${prefix}/usr/share/licenses/ocaml"
+	install -m644 LICENSE "${destdir}/${prefix}/usr/share/licenses/ocaml/"
 }
 
 # vim: set ft=sh :

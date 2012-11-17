@@ -25,7 +25,7 @@ build() {
 	[[ "$architecture" == "x86_64" ]] && configure_args+="--enable-64-bit-bfd --disable-multilib"
 
 	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure \
-		--prefix="${prefix}" \
+		--prefix="${prefix}/usr" \
 		--enable-ld=default --enable-gold \
 		--enable-plugins --enable-threads \
 		--enable-shared $configure_args
@@ -35,7 +35,7 @@ build() {
 
 installenv() {
 	cd "binutils-${version}"
-	make prefix="${destdir}/${prefix}" tooldir="${destdir}/${prefix}" install
+	make prefix="${destdir}/${prefix}/usr" tooldir="${destdir}/${prefix}/usr" install
 }
 
 # vim: set ft=sh :

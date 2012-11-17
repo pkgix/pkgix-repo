@@ -22,8 +22,8 @@ build() {
 	cd "coq-$version"
 
 	./configure \
-		-prefix "${prefix}" \
-		-mandir "${prefix}/share/man" \
+		-prefix "${prefix}/usr" \
+		-mandir "${prefix}/usr/share/man" \
 		-configdir "${prefix}/etc/xdg/coq" \
 		-opt \
 		-with-doc no

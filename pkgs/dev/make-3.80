@@ -14,12 +14,13 @@ iscompat() {
 }
 
 build() {
-	fetch_extract "ftp://ftp.gnu.org/gnu/make/make-${version}.tar.bz2" \
+	fetch_extract \
+		"ftp://ftp.gnu.org/gnu/make/make-${version}.tar.bz2" \
 		"a99b39e7b04c333724f48c38fede709481cfb69fafe7e32ae4285b7fadf92f1b"
 
 	cd "make-${version}"
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}"
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr"
 	
 	make
 }

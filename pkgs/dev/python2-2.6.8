@@ -34,7 +34,7 @@ build() {
 	patch -Np0 -i python-support_bdb-4.8.patch
 	patch -Np0 -i python-2.6-internal-expat.patch
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}" --enable-shared --with-threads --enable-ipv6 \
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr" --enable-shared --with-threads --enable-ipv6 \
                 --enable-unicode=ucs4 --with-system-ffi
 
 	case "$ostype" in
@@ -51,21 +51,21 @@ installenv() {
 	cd "Python-${version}"
 	make DESTDIR="${destdir}" altinstall maninstall
 
-	ln -sf python${_pybasever} "${destdir}/${prefix}/bin/python2"
+	ln -sf python${_pybasever} "${destdir}/${prefix}/usr/bin/python2"
 
 	ln -sf ../../libpython${_pybasever}.so \
-		"${destdir}/${prefix}/lib/python${_pybasever}/config/libpython${_pybasever}.so"
+		"${destdir}/${prefix}/usr/lib/python${_pybasever}/config/libpython${_pybasever}.so"
 
-	mv "${destdir}/${prefix}/bin/smtpd.py" "${destdir}/${prefix}/lib/python${_pybasever}/"
+	mv "${destdir}/${prefix}/usr/bin/smtpd.py" "${destdir}/${prefix}/usr/lib/python${_pybasever}/"
 
 	# fix conflicts with python
-	mv "${destdir}/${prefix}"/bin/idle{,${_pybasever}}
-	mv "${destdir}/${prefix}"/bin/pydoc{,${_pybasever}}
-	mv "${destdir}/${prefix}"/bin/2to3{,-${_pybasever}}
-	mv "${destdir}/${prefix}"/share/man/man1/python{.1,${_pybasever}.1}
+	mv "${destdir}/${prefix}/usr"/bin/idle{,${_pybasever}}
+	mv "${destdir}/${prefix}/usr"/bin/pydoc{,${_pybasever}}
+	mv "${destdir}/${prefix}/usr"/bin/2to3{,-${_pybasever}}
+	mv "${destdir}/${prefix}/usr"/share/man/man1/python{.1,${_pybasever}.1}
 
 	# clean up #!s
-	find "${destdir}/${prefix}/lib/python${_pybasever}/" -name '*.py' | \
+	find "${destdir}/${prefix}/usr/lib/python${_pybasever}/" -name '*.py' | \
 		xargs sed -i "s|#[ ]*![ ]*/usr/bin/env python$|#!/usr/bin/env python${_pybasever}|"
 }
 

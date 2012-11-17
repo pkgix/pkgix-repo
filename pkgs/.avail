@@ -50,7 +50,7 @@ net/socat-1.7.2.1                          1.7.2.1            Socat -- Multipurp
 sci/coq-8.4                                8.4                Formal proof management system
 sci/isabelle-2011                          2011-1             Isabelle proof assistant
 sci/isabelle-2012                          2012               Isabelle proof assistant
-sci/nusmv-2                                ->                 dev/nusmv-2.5.4
+sci/nusmv-2                                ->                 sci/nusmv-2.5.4
 sci/nusmv-2.5.4                            2.5.4              New Symbolic Model Checker
 sci/tlaps                                  ->                 sci/tlaps-1.0
 sci/tlaps-1.0                              1.0                TLA+ Proof System

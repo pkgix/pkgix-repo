@@ -30,15 +30,15 @@ build() {
 
     cd ../nusmv
 
-    LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}"
+    LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr"
     make
 }
 
 installenv() {
 	cd "NuSMV-${version}/nusmv"
 
-    install -D -m755 "NuSMV" "${destdir}/${prefix}/bin/NuSMV"
-	ln -s "NuSMV" "${destdir}/${prefix}/bin/nusmv"
+    install -D -m755 "NuSMV" "${destdir}/${prefix}/usr/bin/NuSMV"
+	ln -s "NuSMV" "${destdir}/${prefix}/usr/bin/nusmv"
 }
 
 # vim: set ft=sh:

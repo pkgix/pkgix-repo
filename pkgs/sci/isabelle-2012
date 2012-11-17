@@ -65,7 +65,7 @@ EOF
 
 installenv() {
 	mkdir -p \
-		"${destdir}/${prefix}/bin" \
+		"${destdir}/${prefix}/usr/bin" \
 		"${destdir}/${prefix}/opt" \
 
 	cp -a "Isabelle$version" "${destdir}/${prefix}/opt/Isabelle$version"
@@ -80,7 +80,7 @@ EOF
 exec "${prefix}/opt/Isabelle${version}/bin/isabelle-process" "\$@"
 EOF
 
-	install -D -m 0755 {isabelle,isabelle-process} "${destdir}/${prefix}/bin"
+	install -D -m 0755 {isabelle,isabelle-process} "${destdir}/${prefix}/usr/bin"
 }
 
 # vim: set ft=sh:

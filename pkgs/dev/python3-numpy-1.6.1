@@ -25,7 +25,7 @@ build() {
 
 installenv() {
 	cd "numpy-${version}"
-	python3 setup.py config_fc --fcompiler=gnu95 install --prefix="${prefix}" --root="${destdir}" --optimize=1
+	python3 setup.py config_fc --fcompiler=gnu95 install --prefix="${prefix}/usr" --root="${destdir}" --optimize=1
 }
 
 # vim: set ft=sh :

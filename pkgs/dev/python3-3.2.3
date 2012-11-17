@@ -29,7 +29,7 @@ build() {
 
 	patch -Np1 < _posixmodule.patch
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}" \
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr" \
 		--enable-shared \
 		--with-threads \
 		--with-computed-gotos \
@@ -46,14 +46,14 @@ installenv() {
 	cd "Python-${version}"
 	make DESTDIR="${destdir}" install
 
-	ln -sf python3               "${destdir}/${prefix}/bin/python"
-	ln -sf python3-config        "${destdir}/${prefix}/bin/python-config"
-	ln -sf idle3                 "${destdir}/${prefix}/bin/idle"
-	ln -sf pydoc3                "${destdir}/${prefix}/bin/pydoc"
-	ln -sf python${_pybasever}.1 "${destdir}/${prefix}/share/man/man1/python3.1"
+	ln -sf python3               "${destdir}/${prefix}/usr/bin/python"
+	ln -sf python3-config        "${destdir}/${prefix}/usr/bin/python-config"
+	ln -sf idle3                 "${destdir}/${prefix}/usr/bin/idle"
+	ln -sf pydoc3                "${destdir}/${prefix}/usr/bin/pydoc"
+	ln -sf python${_pybasever}.1 "${destdir}/${prefix}/usr/share/man/man1/python3.1"
 
 	ln -sf ../../libpython${_pybasever}mu.so \
-		"${destdir}/${prefix}/lib/python${_pybasever}/config-${_pybasever}mu/libpython${_pybasever}mu.so"
+		"${destdir}/${prefix}/usr/lib/python${_pybasever}/config-${_pybasever}mu/libpython${_pybasever}mu.so"
 }
 
 # vim: set ft=sh :

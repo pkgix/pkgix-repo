@@ -20,7 +20,7 @@ build() {
 
 	cd "ppl-${version}"
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}" --enable-interfaces="c,cxx" --with-gmp="${prefix}"
+	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr" --enable-interfaces="c,cxx" --with-gmp="${prefix}/usr"
 	make
 }
 

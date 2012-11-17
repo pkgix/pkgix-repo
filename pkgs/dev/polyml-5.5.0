@@ -21,7 +21,7 @@ build() {
 	cd "polyml.${version}"
 
 	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure \
-		--prefix="${prefix}"
+		--prefix="${prefix}/usr"
 
 	make
 }
