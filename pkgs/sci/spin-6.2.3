@@ -1,0 +1,32 @@
+# Based on: https://aur.archlinux.org/packages/sp/spin/PKGBUILD
+
+version=6.2.3
+description="Tool for the formal verification of distributed software systems."
+depends=()
+license=('http://www.spinroot.com/spin/spin_license.html')
+website="http://spinroot.com/"
+provides=('spin')
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://spinroot.com/spin/Src/src${version//./}.tar.gz" \
+		"ea1fafe124d5031f9367d168fb14271ebc77301d45cc9b78f0470a218beba3c6"
+
+	cd Src${version}
+	make
+}
+
+installenv() {
+	cd Src${version}
+	install -D spin "${destdir}/${prefix}/usr/bin/spin"
+}
+
+# vim: set ft=sh:
