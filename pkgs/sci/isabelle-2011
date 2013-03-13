@@ -1,8 +1,8 @@
 
 version=2011-1
 description="Isabelle proof assistant"
-_polyml_isabelle="5.4.1"
-_polyml_version="5.5" # The version we want to use
+_polyml_isabelle="5.5.0-3"
+_polyml_version="5.5.0" # The version we want to use
 depends=("dev/polyml-$_polyml_version")
 license=('BSD')
 website="http://www.cl.cam.ac.uk/research/hvg/Isabelle/"
@@ -22,7 +22,7 @@ build() {
 
 	fetch_extract \
 		"http://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/contrib/polyml-${_polyml_isabelle}.tar.gz" \
-		"062d69e86b64fc69d56096bed1c295038bccacbe40a63ad38c8165c974e00b6e"
+		"9185d921392c737d671feda2fab80333759a3a91ef55d0a6802aca460f3751ec"
 
 	isabelle_platform="$(bash -c '
 		source Isabelle'"$version"'/lib/scripts/isabelle-platform

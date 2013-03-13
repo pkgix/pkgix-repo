@@ -1,0 +1,48 @@
+# Based on: https://projects.archlinux.org/svntogit/packages.git/tree/trunk/PKGBUILD?h=packages/unison
+
+version=2.40.102
+description="Unison file-synchronization tool"
+depends=('dev/ocaml' 'dev/lablgtk2')
+website="http://www.cis.upenn.edu/~bcpierce/unison"
+license=('GPL2')
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://www.cis.upenn.edu/~bcpierce/unison/download/releases/unison-$version/unison-$version.tar.gz" \
+		"md5=42caf869f40440ed0e75eef07a605b2e"
+
+	cd "unison-$version"
+
+	# Build text-only version
+	make clean
+	make mkProjectInfo 
+	make UISTYLE=text DEBUGGING=false THREADS=true || return 1
+	mv unison unison-text
+
+	# Build GUI version
+	make clean
+	make mkProjectInfo
+	make UISTYLE=gtk2 DEBUGGING=false THREADS=true || : # ignore if GUI version could not be built
+}
+
+installenv() {
+	cd "unison-$version"
+
+	install -Dm755 unison-text "${destdir}/${prefix}/usr/bin/unison"
+
+	if install -Dm755 unison "${destdir}/${prefix}/usr/bin/unison-gtk2" &> /dev/null; then
+		ln -s unison-gtk2 "${destdir}/${prefix}/usr/bin/unison-x11"
+	else
+		msg_printf "Unison Gtk not available due to build errors\n"
+	fi
+}
+
+# vim: set ft=sh :

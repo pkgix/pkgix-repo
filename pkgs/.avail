@@ -13,11 +13,14 @@ dev/gmp-5                                  5.0.5              Metapackage for GM
 dev/gmp-5.0.5                              5.0.5              GMP
 dev/gperftools                             ->                 dev/gperftools-2.0
 dev/gperftools-2.0                         2.0                Gperftools
+dev/lablgtk2                               ->                 dev/lablgtk2-2.16.0
+dev/lablgtk2-2.16.0                        2.16.0             An Objective Caml interface to gtk2
 dev/libmpc                                 1.0.1              Metapackage for libmpc
 dev/libmpc-1.0.1                           1.0.1              libmpc
 dev/make-3.80                              3.80               GNU Make
 dev/mpfr                                   3.1.1              Metapackage for MPFR
 dev/mpfr-3.1.1                             3.1.1              MPFR
+dev/ocaml                                  3.2.3              Metapackage for Ocaml
 dev/ocaml-3.12                             ->                 dev/ocaml-3.12.1
 dev/ocaml-3.12.1                           3.12.1             A functional language with OO extensions
 dev/pcre                                   ->                 dev/pcre-8.31
@@ -47,15 +50,20 @@ dev/swig-2.0.4                             2.0.4              SWIG
 dev/swig-2.0.7                             2.0.7              SWIG
 net/socat                                  ->                 net/socat-1.7.2.1
 net/socat-1.7.2.1                          1.7.2.1            Socat -- Multipurpose relay
+net/unison-2.40.102                        2.40.102           Unison file-synchronization tool
+net/unison-2.40.65                         2.40.65            Unison file-synchronization tool
 sci/coq-8.4                                8.4                Formal proof management system
+sci/cvc3                                   ->                 sci/cvc3-2.4.1
+sci/cvc3-2.4.1                             2.4.1              Automatic theorem prover for Satisfiability Modulo Theories (SMT)
 sci/isabelle-2011                          2011-1             Isabelle proof assistant
 sci/isabelle-2012                          2012               Isabelle proof assistant
 sci/nusmv-2                                ->                 sci/nusmv-2.5.4
 sci/nusmv-2.5.4                            2.5.4              New Symbolic Model Checker
 sci/spin-6                                 ->                 sci/spin-6.2.3
 sci/spin-6.2.3                             6.2.3              Tool for the formal verification of distributed software systems.
-sci/tlaps                                  ->                 sci/tlaps-1.0
+sci/tlaps                                  ->                 sci/tlaps-1.1
 sci/tlaps-1.0                              1.0                TLA+ Proof System
+sci/tlaps-1.1                              1.1.1              TLA+ Proof System
 sci/tla-tools                              ->                 sci/tla-tools-2.1.3
 sci/tla-tools-2.1.3                        2.1.3              Tools for the TLA+2 language
 sci/zenon-0.7                              ->                 sci/zenon-0.7.1

@@ -1,0 +1,10 @@
+
+version=3.2.3
+metapkg=dev/python3-$version
+description="Metapackage for Ocaml"
+
+satisfied() {
+	which ocaml &> /dev/null
+}
+
+# vim: set ft=sh :

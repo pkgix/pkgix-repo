@@ -1,0 +1,30 @@
+
+version=2.4.1
+description="Automatic theorem prover for Satisfiability Modulo Theories (SMT)"
+depends=()
+license=('custom')
+website="http://www.cs.nyu.edu/acsys/cvc3/"
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://www.cs.nyu.edu/acsys/cvc3/releases/$version/cvc3-$version.tar.gz" \
+		"d55b1d6006cfbac3f6d4c086964558902c3ed0efa66ac499cfb2193f3ee4acf7"
+
+	cd "cvc3-$version"
+	./configure --prefix "${prefix}/usr" && make
+}
+
+installenv() {
+	cd "cvc3-$version"
+	make prefix="${destdir}/${prefix}" install
+}
+
+# vim: set ft=sh:
