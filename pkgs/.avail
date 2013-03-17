@@ -20,7 +20,7 @@ dev/libmpc-1.0.1                           1.0.1              libmpc
 dev/make-3.80                              3.80               GNU Make
 dev/mpfr                                   3.1.1              Metapackage for MPFR
 dev/mpfr-3.1.1                             3.1.1              MPFR
-dev/ocaml                                  3.2.3              Metapackage for Ocaml
+dev/ocaml                                  3.12               Metapackage for Ocaml
 dev/ocaml-3.12                             ->                 dev/ocaml-3.12.1
 dev/ocaml-3.12.1                           3.12.1             A functional language with OO extensions
 dev/pcre                                   ->                 dev/pcre-8.31

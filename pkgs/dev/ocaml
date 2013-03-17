@@ -1,6 +1,6 @@
 
-version=3.2.3
-metapkg=dev/python3-$version
+version=3.12
+metapkg=dev/ocaml-$version
 description="Metapackage for Ocaml"
 
 satisfied() {
