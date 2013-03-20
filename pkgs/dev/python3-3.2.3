@@ -8,7 +8,7 @@ license=('PSF')
 _pybasever="${version%.*}"
 
 isinstalled() {
-	python3 --version 2>&1 | grep -q "$version" &> /dev/null
+	type -p python3 &>/dev/null && python3 --version 2>&1 | grep -q "$version" &> /dev/null
 }
 
 iscompat() {

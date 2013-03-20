@@ -7,7 +7,7 @@ license=('LGPL2' 'custom: QPL-1.0')
 website="http://caml.inria.fr/"
 
 isinstalled() {
-	ocaml -version 2>&1 | grep -q "$version" &> /dev/null
+	type -p ocaml &>/dev/null && ocaml -version 2>&1 | grep -q "$version" &> /dev/null
 }
 
 iscompat() {
