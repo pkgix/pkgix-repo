@@ -1,0 +1,25 @@
+
+version=1.2
+description="Fast, simple object-to-object and broadcast signaling for Python"
+website="http://discorporate.us/projects/Blinker/"
+license=('MIT')
+depends=('dev/python3')
+
+isinstalled() {
+	python3 -c 'import blinker' &>/dev/null
+}
+
+iscompat()    { return 0; }
+
+build() {
+	fetch_extract \
+		"http://pypi.python.org/packages/source/b/blinker/blinker-${version}.tar.gz" \
+		"7062c05e9f724e2208835e335df5ffdc169004fe372ca91fb6408cd0f8e3aa85"
+}
+
+installenv() {
+	cd "blinker-${version}"
+	python3 setup.py install --prefix="${prefix}/usr" --root="${destdir}" --optimize=1
+}
+
+# vim: set ft=sh :

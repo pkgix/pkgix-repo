@@ -1,0 +1,33 @@
+# Base on: https://aur.archlinux.org/packages/st/statifier/PKGBUILD
+
+version=1.7.2
+description="A tool for generating static binaries of dynamic ELF executables"
+depends=()
+website="http://statifier.sourceforge.net/"
+license=('GPL')
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://downloads.sourceforge.net/statifier/statifier-${version}.tar.gz" \
+		"685f7b7957f6b85a369ec5f2f3f7f3f112552bcd12c122aa3a83a310ddb35628"
+
+	cd "statifier-$version"
+	sed -i '12 s/yes/no/' configs/config.x86_64
+	make || return 1
+}
+
+installenv() {
+	cd "statifier-$version"
+	make DESTDIR="${destdir}/${prefix}" install
+	sed -i "s:/usr/lib:${prefix}/usr/lib:" "${destdir}/${prefix}/usr/bin/statifier"
+}
+
+# vim: set ft=sh :

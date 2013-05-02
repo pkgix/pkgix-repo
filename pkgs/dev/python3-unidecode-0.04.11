@@ -1,0 +1,27 @@
+
+version=0.04.11
+description='ASCII transliterations of Unicode text'
+website='http://pypi.python.org/pypi/Unidecode/'
+license=('GPL')
+depends=('dev/python3')
+
+isinstalled() {
+	python3 -c 'import unidecode' &>/dev/null
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://pypi.python.org/packages/source/U/Unidecode/Unidecode-${version}.tar.gz" \
+		"8c120a6f7ffe3428d41072ab28edb7813aeea38aaab05ab073eb74eb2390173a"
+}
+
+installenv() {
+	cd "Unidecode-${version}"
+	python3 setup.py install --prefix="${prefix}/usr" --root="${destdir}" --optimize=1
+}
+
+# vim: set ft=sh :

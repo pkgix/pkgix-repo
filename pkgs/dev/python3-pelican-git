@@ -1,0 +1,43 @@
+# Based on: https://aur.archlinux.org/packages/pe/pelican-git/PKGBUILD
+
+version=20130323
+description="Static blog generator in python, using ReST or Markdown syntax"
+website="http://pelican.notmyidea.org/"
+license=("AGPL3")
+depends=("dev/python3" "dev/python3-unidecode" "dev/python3-feedgenerator" "dev/python3-blinker")
+
+_gitroot="https://github.com/getpelican/pelican.git"
+_gitname="pelican"
+_gitcommit="4bdb8a5d34a7887a1404528a44a3a8abb622fbf8"
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	if [ -d $_gitname ] ; then
+		cd $_gitname && git pull origin
+	else
+		git clone $_gitroot $_gitname
+	fi
+
+	rm -rf "$_gitname-build"
+	git clone "$_gitname" "$_gitname-build"
+	cd "$_gitname-build"
+	git checkout "$_gitcommit"
+}
+
+installenv() {
+	cd "$_gitname-build"
+	python3 ./setup.py install --prefix="${prefix}/usr" --root="${destdir}" --optimize=1
+
+	for x in "${destdir}/${prefix}/usr/bin/"*; do
+		sed -i "s:^#!.*python.*$:#!${prefix}/usr/bin/python3:" "$x"
+	done
+}
+
+# vim: set ft=sh :

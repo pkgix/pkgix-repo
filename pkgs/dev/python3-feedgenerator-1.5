@@ -1,0 +1,25 @@
+
+version=1.5
+description="Standalone version of django.utils.feedgenerator."
+website="http://pypi.python.org/pypi/feedgenerator"
+license=('GPL')
+depends=('dev/python3')
+
+isinstalled() {
+	python3 -c 'import feedgenerator' &>/dev/null
+}
+
+iscompat()    { return 0; }
+
+build() {
+	fetch_extract \
+		"http://pypi.python.org/packages/source/f/feedgenerator/feedgenerator-${version}.tar.gz" \
+		"7bc7dae02d5ca37f305311ca1696f2945625b08db70056b35f18727894bc5a3e"
+}
+
+installenv() {
+	cd "feedgenerator-${version}"
+	python3 setup.py install --prefix="${prefix}/usr" --root="${destdir}" --optimize=1
+}
+
+# vim: set ft=sh :
