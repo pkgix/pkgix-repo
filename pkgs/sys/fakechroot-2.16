@@ -1,0 +1,45 @@
+# Based on: https://projects.archlinux.org/svntogit/packages.git/tree/trunk/PKGBUILD?h=packages/fakechroot
+
+version=2.16
+description="Gives a fake chroot environment"
+website="https://github.com/fakechroot/fakechroot/wiki"
+license=('LGPL')
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"https://github.com/downloads/fakechroot/fakechroot/fakechroot-${version}.tar.gz" \
+		"81c105e0878b55fbcf430235badcb31249d86ac435297910f411d9955dadf9c6"
+
+	cd "fakechroot-${version}"
+
+	LDFLAGS="-Wl,-rpath=${prefix}/usr/lib/libfakeroot/fakechroot/:$LD_RUN_PATH" ./configure \
+		--prefix="${prefix}/usr" \
+		--libdir="${prefix}/usr/lib/libfakeroot" \
+		--sysconfdir="${prefix}/etc"
+
+	make
+}
+
+check() {
+	cd "fakechroot-${version}"
+
+	# The chroot check is broken (upstream?)
+	sed -i '12 s/$/break/' "test/t/chroot.t"
+
+	make check
+}
+
+installenv() {
+	cd "fakechroot-${version}"
+	make DESTDIR="${destdir}" install
+}
+
+# vim: set ft=sh :

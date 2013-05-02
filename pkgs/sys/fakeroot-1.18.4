@@ -1,0 +1,37 @@
+# Based on: https://projects.archlinux.org/svntogit/packages.git/tree/trunk/PKGBUILD?h=packages/fakeroot
+
+version=1.18.4
+description="Gives a fake root environment, useful for building packages as a non-privileged user"
+license=('GPL')
+website="http://packages.debian.org/fakeroot"
+depends=()
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://ftp.debian.org/debian/pool/main/f/fakeroot/fakeroot_${version}.orig.tar.bz2" \
+		"0a359efa3e9496c33234b3e9c89306a09bb4da9d33de43c261f1d8447e6ebea2"
+
+	cd "fakeroot-${version}"
+
+	LDFLAGS="-Wl,-rpath=${prefix}/usr/lib/libfakeroot:$LD_RUN_PATH" ./configure \
+		--prefix="${prefix}/usr" \
+		--libdir="${prefix}/usr/lib/libfakeroot" \
+		--disable-static --with-ipc=sysv
+
+	make
+}
+
+installenv() {
+	cd "fakeroot-${version}"
+	make DESTDIR="${destdir}" install
+}
+
+# vim: set ft=sh :
