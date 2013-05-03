@@ -20,6 +20,12 @@ build() {
 
 	cd "ppl-${version}"
 
+	fetch \
+		"${repo}/../support/patches/dev/ppl-1.0_gmp-5.1.patch" \
+		"dbe3e5184469253ddd832d25e9df40dd8daaad3bf0ab7b985e43e0c21f450208"
+
+	patch -Np1 -i ppl-1.0_gmp-5.1.patch
+
 	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr" --enable-interfaces="c,cxx" --with-gmp="${prefix}/usr"
 	make
 }

@@ -20,7 +20,7 @@ satisfied() {
 	if [[ -z "$headerpath" ]]; then
 		return 1
 	else
-		grep -q '__GNU_MP_VERSION 5$' "$headerpath"
+		grep -q '__GNU_MP_VERSION[ \t]*5$' "$headerpath"
 	fi
 }
 
