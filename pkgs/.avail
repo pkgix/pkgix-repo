@@ -42,15 +42,19 @@ dev/python3-3.2.3                          3.2.3              The Python 3 inter
 dev/python3-3.3.0                          3.3.0              The Python 3 interpreter
 dev/python3-blinker                        ->                 dev/python3-blinker-1.2
 dev/python3-blinker-1.2                    1.2                Fast, simple object-to-object and broadcast signaling for Python
-dev/python3-feedgenerator                  ->                 dev/python3-feedgenerator-1.5
+dev/python3-feedgenerator                  ->                 dev/python3-feedgenerator-1.6
 dev/python3-feedgenerator-1.5              1.5                Standalone version of django.utils.feedgenerator.
+dev/python3-feedgenerator-1.6              1.6                Standalone version of django.utils.feedgenerator.
 dev/python3-numpy                          ->                 dev/python3-numpy-1.6.2
 dev/python3-numpy-1.6.1                    1.6.1              Numpy Python library
 dev/python3-numpy-1.6.2                    1.6.2              Numpy Python library
+dev/python3-pelican                        ->                 dev/python3-pelican-3.2
+dev/python3-pelican-3.2                    3.2.2              Static blog generator in python, using ReST or Markdown syntax
 dev/python3-pelican-git                    20130323           Static blog generator in python, using ReST or Markdown syntax
-dev/python3-unidecode                      ->                 dev/python3-unidecode-0.04.11
+dev/python3-unidecode                      ->                 dev/python3-unidecode-0.04.13
 dev/python3-unidecode-0.04.11              0.04.11            ASCII transliterations of Unicode text
-dev/python3-wrapper                        20130503           Python 3 wrapper to set PYTHONPATH properly
+dev/python3-unidecode-0.04.13              0.04.13            ASCII transliterations of Unicode text
+dev/python3-wrapper                        20130619           Python 3 wrapper to set PYTHONPATH properly
 dev/readline                               6.2                Metapackage for readline
 dev/readline-6.2                           6.2                GNU readline
 dev/statifier                              ->                 dev/statifier-1.7.2
