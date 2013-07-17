@@ -1,4 +1,6 @@
 
+source_pkg ".functions/build" "${repo}"
+
 version=3.80
 description="GNU Make"
 depends=()
@@ -20,7 +22,7 @@ build() {
 
 	cd "make-${version}"
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr"
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr"
 	
 	make
 }

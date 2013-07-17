@@ -1,4 +1,6 @@
 
+source_pkg ".functions/build" "${repo}"
+
 version=5.0.5
 description="GMP"
 depends=()
@@ -40,7 +42,7 @@ build() {
 
 	cd "gmp-${version}"
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr" --enable-cxx
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr" --enable-cxx
 	make
 }
 

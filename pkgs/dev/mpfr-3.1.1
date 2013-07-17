@@ -1,4 +1,6 @@
 
+source_pkg ".functions/build" "${repo}"
+
 version=3.1.1
 description="MPFR"
 depends=('dev/gmp-5')
@@ -44,7 +46,7 @@ build() {
 
 	patch -Np1 -i mpfr-3.1.1-allpatches.patch
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr" --enable-thread-safe --enable-shared
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr" --enable-thread-safe --enable-shared
 	make
 }
 

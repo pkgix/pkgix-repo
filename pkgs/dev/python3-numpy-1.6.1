@@ -1,4 +1,6 @@
 
+source_pkg ".functions/build" "${repo}"
+
 version=1.6.1
 description="Numpy Python library"
 depends=("dev/python3")
@@ -20,7 +22,7 @@ build() {
 
 	cd "numpy-${version}"
 
-	Atlas=None LDFLAGS="-Wl,-rpath=$LD_RUN_PATH -shared" python3 setup.py config_fc --fcompiler=gnu95 build
+	Atlas=None LDFLAGS="-shared" build_wrap_ldflags python3 setup.py config_fc --fcompiler=gnu95 build
 }
 
 installenv() {

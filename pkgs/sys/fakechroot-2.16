@@ -1,4 +1,6 @@
 # Based on: https://projects.archlinux.org/svntogit/packages.git/tree/trunk/PKGBUILD?h=packages/fakechroot
+source_pkg ".functions/build" "${repo}"
+
 
 version=2.16
 description="Gives a fake chroot environment"
@@ -20,7 +22,7 @@ build() {
 
 	cd "fakechroot-${version}"
 
-	LDFLAGS="-Wl,-rpath=${prefix}/usr/lib/libfakeroot/fakechroot/:$LD_RUN_PATH" ./configure \
+	LD_RUN_PATH="${prefix}/usr/lib/libfakeroot/fakechroot/:$LD_RUN_PATH" build_wrap_ldflags ./configure \
 		--prefix="${prefix}/usr" \
 		--libdir="${prefix}/usr/lib/libfakeroot" \
 		--sysconfdir="${prefix}/etc"

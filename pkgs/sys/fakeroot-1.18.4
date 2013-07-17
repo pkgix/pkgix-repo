@@ -1,4 +1,6 @@
 # Based on: https://projects.archlinux.org/svntogit/packages.git/tree/trunk/PKGBUILD?h=packages/fakeroot
+source_pkg ".functions/build" "${repo}"
+
 
 version=1.18.4
 description="Gives a fake root environment, useful for building packages as a non-privileged user"
@@ -21,7 +23,7 @@ build() {
 
 	cd "fakeroot-${version}"
 
-	LDFLAGS="-Wl,-rpath=${prefix}/usr/lib/libfakeroot:$LD_RUN_PATH" ./configure \
+	LD_RUN_PATH="${prefix}/usr/lib/libfakeroot:$LD_RUN_PATH" build_wrap_ldflags ./configure \
 		--prefix="${prefix}/usr" \
 		--libdir="${prefix}/usr/lib/libfakeroot" \
 		--disable-static --with-ipc=sysv

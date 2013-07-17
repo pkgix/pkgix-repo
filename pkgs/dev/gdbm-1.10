@@ -1,4 +1,6 @@
 
+source_pkg ".functions/build" "${repo}"
+
 version=1.10
 description="GNU dbm"
 depends=()
@@ -38,7 +40,7 @@ build() {
 
 	cd "gdbm-${version}"
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr"
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr"
 	make
 }
 

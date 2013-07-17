@@ -1,5 +1,7 @@
 # Based on: http://aur.archlinux.org/packages/nu/nusmv/PKGBUILD
 
+source_pkg ".functions/build" "${repo}"
+
 version=2.5.4
 description="New Symbolic Model Checker"
 depends=()
@@ -26,11 +28,11 @@ build() {
       cp Makefile_64bit Makefile
     fi
 
-    LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" make
+    build_wrap_ldflags make
 
     cd ../nusmv
 
-    LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr"
+    build_wrap_ldflags ./configure --prefix="${prefix}/usr"
     make
 }
 

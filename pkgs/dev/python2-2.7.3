@@ -1,4 +1,6 @@
 # Based on: https://projects.archlinux.org/svntogit/packages.git/tree/trunk/PKGBUILD?h=packages/python2
+source_pkg ".functions/build" "${repo}"
+
 
 version=2.7.3
 description="The Python 2 interpreter"
@@ -29,7 +31,7 @@ build() {
 	# Enable built-in SQLite module to load extensions
 	sed -i "/SQLITE_OMIT_LOAD_EXTENSION/d" setup.py
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr" --enable-shared --with-threads --enable-ipv6 \
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr" --enable-shared --with-threads --enable-ipv6 \
 	            --enable-unicode=ucs4 --with-system-expat --with-system-ffi \
 	            --with-dbmliborder=gdbm:ndbm
 

@@ -1,4 +1,6 @@
 # Based on: http://aur.archlinux.org/packages/py/python26/PKGBUILD
+source_pkg ".functions/build" "${repo}"
+
 
 version=2.6.8
 description="The Python 2 interpreter"
@@ -34,7 +36,7 @@ build() {
 	patch -Np0 -i python-support_bdb-4.8.patch
 	patch -Np0 -i python-2.6-internal-expat.patch
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr" --enable-shared --with-threads --enable-ipv6 \
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr" --enable-shared --with-threads --enable-ipv6 \
                 --enable-unicode=ucs4 --with-system-ffi
 
 	case "$ostype" in

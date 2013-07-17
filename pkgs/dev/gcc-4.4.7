@@ -1,4 +1,6 @@
 
+source_pkg ".functions/build" "${repo}"
+
 version=4.4.7
 description="The GCC compiler"
 depends=()
@@ -19,7 +21,7 @@ build() {
 
 	cd "gcc-${version}"
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure \
+	build_wrap_ldflags ./configure \
 		--prefix="${prefix}/usr" \
 		--mandir="${prefix}/usr/share/man" \
 		--infodir="${prefix}/usr/share/info" \

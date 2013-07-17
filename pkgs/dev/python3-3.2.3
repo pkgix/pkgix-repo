@@ -1,4 +1,6 @@
 
+source_pkg ".functions/build" "${repo}"
+
 version=3.2.3
 description="The Python 3 interpreter"
 depends=("dev/gdbm" "dev/readline")
@@ -29,7 +31,7 @@ build() {
 
 	patch -Np1 < _posixmodule.patch
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr" \
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr" \
 		--enable-shared \
 		--with-threads \
 		--with-computed-gotos \

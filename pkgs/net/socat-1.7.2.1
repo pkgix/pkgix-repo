@@ -1,4 +1,6 @@
 
+source_pkg ".functions/build" "${repo}"
+
 version=1.7.2.1
 description="Socat -- Multipurpose relay"
 depends=()
@@ -20,7 +22,7 @@ build() {
 
 	cd "socat-${version}"
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure \
+	build_wrap_ldflags ./configure \
 		--prefix="${prefix}/usr" \
 		--mandir="${prefix}/usr/share/man"
 	

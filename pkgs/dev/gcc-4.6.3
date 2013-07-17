@@ -1,4 +1,6 @@
 # Based on: http://aur.archlinux.org/packages/gc/gcc46/PKGBUILD
+source_pkg ".functions/build" "${repo}"
+
 
 version=4.6.3
 description="The GCC compiler"
@@ -50,7 +52,7 @@ build() {
 	# Do not run fixincludes
 	sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr" \
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr" \
 		--libdir="${prefix}/usr/lib" --libexecdir="${prefix}/usr/lib" \
 		--mandir="${prefix}/usr/share/man" --infodir="${prefix}/usr/share/info" \
 		--enable-languages=c,c++,fortran \

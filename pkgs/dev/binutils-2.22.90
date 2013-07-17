@@ -1,4 +1,6 @@
 
+source_pkg ".functions/build" "${repo}"
+
 version=2.22.90
 description="GNU Binutils"
 depends=()
@@ -24,7 +26,7 @@ build() {
 	local configure_args=""
 	[[ "$architecture" == "x86_64" ]] && configure_args+="--enable-64-bit-bfd --disable-multilib"
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure \
+	build_wrap_ldflags ./configure \
 		--prefix="${prefix}/usr" \
 		--enable-ld=default --enable-gold \
 		--enable-plugins --enable-threads \

@@ -1,4 +1,6 @@
 
+source_pkg ".functions/build" "${repo}"
+
 version=1.0
 description="PPL"
 depends=(dev/gmp-5)
@@ -26,7 +28,7 @@ build() {
 
 	patch -Np1 -i ppl-1.0_gmp-5.1.patch
 
-	LDFLAGS="-Wl,-rpath=$LD_RUN_PATH" ./configure --prefix="${prefix}/usr" --enable-interfaces="c,cxx" --with-gmp="${prefix}/usr"
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr" --enable-interfaces="c,cxx" --with-gmp="${prefix}/usr"
 	make
 }
 
