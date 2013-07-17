@@ -1,9 +1,9 @@
 version=4.7.2
 description="The GCC compiler"
-depends=('dev/gmp' 'dev/mpfr' 'dev/libmpc' 'dev/ppl')
+depends=('dev/gmp-5' 'dev/mpfr-3' 'dev/libmpc' 'dev/ppl')
 website="http://gcc.gnu.org/"
 license=('GPL' 'LGPL' 'FDL' 'custom')
-forceinstall=('share/info/dir')
+forceinstall=('usr/share/info/dir')
 
 isinstalled() {
 	gcc --version | grep -q " $version " &> /dev/null

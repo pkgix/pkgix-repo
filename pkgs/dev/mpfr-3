@@ -1,0 +1,27 @@
+
+version=3.1.1
+metapkg=dev/mpfr-$version
+description="Metapackage for MPFR 3"
+
+satisfied() {
+	local headerpath
+	local old_IFS="$IFS"
+	IFS=":"
+
+	# Check all the common paths
+	for path in ${CPATH[@]} /include /usr/include; do
+		if [[ -f "$path/mpfr.h" ]]; then
+			headerpath="$path/mpfr.h"
+			break
+		fi
+	done
+	IFS="$old_IFS"
+
+	if [[ -z "$headerpath" ]]; then
+		return 1
+	else
+		grep -q "MPFR_VERSION_STRING \"3\"$" "$headerpath"
+	fi
+}
+
+# vim: set ft=sh :
