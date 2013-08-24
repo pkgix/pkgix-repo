@@ -1,0 +1,25 @@
+
+version=0.2.6
+description="A Sphinx extension for BibTeX style citations"
+website="http://sphinxcontrib-bibtex.readthedocs.org/"
+license=('BSD')
+depends=('dev/python3' 'dev/python3-pybtex' 'dev/python3-oset')
+
+isinstalled() {
+	python3 -c 'import sphinxcontrib.bibtex' &>/dev/null
+}
+
+iscompat() { return 0; }
+
+build() {
+	fetch_extract \
+		"http://pypi.python.org/packages/source/s/sphinxcontrib-bibtex/sphinxcontrib-bibtex-${version}.zip" \
+		"cb52e2305f13aa2c7d94e8432a8c3c70408c7cc734be1352967166f7639964b0"
+}
+
+installenv() {
+	cd "sphinxcontrib-bibtex-${version}"
+	python3 setup.py install --prefix="${prefix}/usr" --root="${destdir}" --optimize=1
+}
+
+# vim: set ft=sh :
