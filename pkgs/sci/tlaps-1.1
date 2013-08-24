@@ -2,7 +2,7 @@
 
 version=1.1.1
 description="TLA+ Proof System"
-depends=('dev/ocaml-3.12' 'sci/zenon-0.7' 'sci/isabelle-2011' 'sci/cvc3')
+depends=('dev/ocaml-3.12' 'sci/zenon-0.7' 'sci/isabelle-2011' 'sci/cvc3' 'sci/cvc3')
 license=('BSD')
 website="http://tla.msr-inria.inria.fr/tlaps/content/Home.html"
 
@@ -16,7 +16,7 @@ iscompat() {
 
 build() {
 	fetch_extract \
-		"http://tla.msr-inria.inria.fr/tlaps/dist/current/tlaps-1.1.1.tar.gz" \
+		"http://tla.msr-inria.inria.fr/tlaps/dist/1.1.1/tlaps-1.1.1.tar.gz" \
 		"d2ace92235a26ad851b1b5f9f6b2e89f32ecae1a67746b7d1253099d3c58b87b"
 
     cd tlaps-${version}*/
@@ -24,8 +24,6 @@ build() {
 	fetch \
 		"${repo}/../support/patches/sci/tlaps-1.1.1.patch" \
 		"24c744022c5121af58968d276c105718ea7cf2d22545012c945b1a3404589a28"
-
-	patch -Np1 -i tlaps-1.1.1.patch
 
 	cd isabelle
 	make || return 1

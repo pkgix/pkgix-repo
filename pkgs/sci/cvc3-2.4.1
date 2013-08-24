@@ -24,7 +24,7 @@ build() {
 
 installenv() {
 	cd "cvc3-$version"
-	make prefix="${destdir}/${prefix}" install
+	make prefix="${destdir}/${prefix}/usr" install
 }
 
 # vim: set ft=sh:

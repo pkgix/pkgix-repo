@@ -48,6 +48,9 @@ EOF
 
 	cat >> etc/settings <<EOF
 
+# Custom settings
+ISABELLE_HOME_USER="${prefix}/usr/local/share/Isabelle-${version%-*}"
+
 # Poly/ML installation in '${prefix}'
 ML_PLATFORM="\${ISABELLE_PLATFORM64:-\$ISABELLE_PLATFORM}"
 ML_SYSTEM=polyml-${_polyml_version}
