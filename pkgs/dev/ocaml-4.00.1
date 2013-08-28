@@ -1,0 +1,37 @@
+# Based on: https://projects.archlinux.org/svntogit/packages.git/plain/trunk/PKGBUILD?h=packages/ocaml
+
+version=4.00.1
+description="A functional language with OO extensions"
+depends=('dev/gdbm')
+license=('LGPL2' 'custom: QPL-1.0')
+website="http://caml.inria.fr/"
+
+isinstalled() {
+	type -p ocaml &>/dev/null && ocaml -version 2>&1 | grep -q "$version" &> /dev/null
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://caml.inria.fr/distrib/ocaml-4.00/ocaml-${version}.tar.gz" \
+		"b48d5c7d3bf4a0cd6125f8fdfc1f654dd65586087399dc9f14716d7b9535e87a"
+
+	cd "ocaml-${version}"
+
+	./configure -prefix "${prefix}/usr"
+	make world.opt
+}
+
+installenv() {
+	cd "ocaml-${version}"
+	make PREFIX="${destdir}/${prefix}/usr" MANDIR="${destdir}/${prefix}/usr/share/man" install
+
+	# install license
+	install -m755 -d "${destdir}/${prefix}/usr/share/licenses/ocaml"
+	install -m644 LICENSE "${destdir}/${prefix}/usr/share/licenses/ocaml/"
+}
+
+# vim: set ft=sh :
