@@ -4,7 +4,7 @@ metapkg=dev/ocaml-$version
 description="Metapackage for Ocaml"
 
 satisfied() {
-	type -p ocaml &>/dev/null && ocaml -version 2>&1 | grep -q "$version" &> /dev/null
+	type -p ocaml &>/dev/null
 }
 
 # vim: set ft=sh :

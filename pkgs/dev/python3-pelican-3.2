@@ -20,7 +20,7 @@ iscompat() {
 
 build() {
 	if [[ -d $_gitname ]] ; then
-		cd $_gitname && git pull origin
+		( cd $_gitname && git pull origin )
 	else
 		git clone $_gitroot $_gitname
 	fi

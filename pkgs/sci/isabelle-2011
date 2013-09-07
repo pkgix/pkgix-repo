@@ -54,7 +54,7 @@ ML_SYSTEM=polyml-${_polyml_version}
 ML_OPTIONS="-H 500"
 EOF
 
-	sed -i "s:^ISABELLE_HOME_USER=.*$:ISABELLE_HOME_USER=\"${prefix}/usr/local/share/Isabelle-${version%-*}\":" etc/settings
+	sed -i "s:^ISABELLE_HOME_USER=.*$:ISABELLE_HOME_USER=\"${prefix}/usr/local/share/Isabelle${version%-*}\":" etc/settings
 
 	cp etc/settings etc/settings.bak
 
