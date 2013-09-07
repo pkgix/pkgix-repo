@@ -1,0 +1,54 @@
+
+source_pkg ".functions/build" "${repo}"
+
+version=4.3.2
+description="GMP"
+depends=()
+website="http://gmplib.org"
+license=('LGPL3')
+forceinstall=('usr/share/info/dir')
+
+isinstalled() {
+	local headerpath
+	local old_IFS="$IFS"
+	IFS=":"
+
+	# Check all the common paths
+	for path in ${CPATH[@]} /include /usr/include; do
+		if [[ -f "$path/gmp.h" ]]; then
+			headerpath="$path/gmp.h"
+			break
+		fi
+	done
+	IFS="$old_IFS"
+
+	if [[ -z "$headerpath" ]]; then
+		return 1
+	else
+		grep -q '__GNU_MP_VERSION 4$' "$headerpath" &&
+			grep -q '__GNU_MP_VERSION_MINOR 3$' "$headerpath" &&
+			grep -q '__GNU_MP_VERSION_PATCHLEVEL 2$' "$headerpath"
+	fi
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"ftp://ftp.gnu.org/gnu/gmp/gmp-${version}.tar.bz2" \
+		"936162c0312886c21581002b79932829aa048cfaf9937c6265aeaa14f1cd1775"
+
+	cd "gmp-${version}"
+
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr" --enable-cxx
+	make
+}
+
+installenv() {
+	cd "gmp-${version}"
+	make DESTDIR="${destdir}" install
+}
+
+# vim: set ft=sh :

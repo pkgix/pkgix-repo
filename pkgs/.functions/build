@@ -23,4 +23,20 @@ build_wrap_ldflags() {
 	LDFLAGS="${ldflags}-Wl,-rpath=${LD_RUN_PATH} ${LDFLAGS:-}" "$@"
 }
 
+
+: ${HACKAGE_URL:="http://hdiff.luite.com"}
+fetch_hackage() {
+	local _name="$1"
+	local _version="$2"
+	local _checksum="$3"
+	fetch_extract \
+		"${HACKAGE_URL}/packages/archive/${_name}/${_version}/${_name}-${_version}.tar.gz" \
+		"$_checksum"
+}
+
+haskell_patch_register() {
+	sed -i -r -e "s|'--global' ||" register.sh
+	sed -i -r -e "s|ghc-pkg.*unregister[^ ]* |&'--force' |" -e "s|'--global' ||" unregister.sh
+}
+
 # vim: set ft=sh :

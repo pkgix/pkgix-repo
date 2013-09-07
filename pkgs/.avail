@@ -8,19 +8,39 @@ dev/gcc-4.7                                ->                 dev/gcc-4.7.2
 dev/gcc-4.7.2                              4.7.2              The GCC compiler
 dev/gdbm                                   1.10               Metapackage for GDBM
 dev/gdbm-1.10                              1.10               GNU dbm
-dev/ghc                                    1                  Metapackage for Python 3
-dev/ghc-wrapper                            20130907           GHC wrapper
+dev/ghc                                    1                  Metapackage for GHC
+dev/ghc-7.4.2                              7.4.2              The Glasgow Haskell Compiler
+dev/ghc-dist-7.4.2                         7.4.2              The Glasgow Haskell Compiler
+dev/ghc-wrapper                            1                  GHC wrapper
 dev/gmp                                    5.0.5              Metapackage for GMP
+dev/gmp-4                                  4.3.2              Metapackage for GMP 4
+dev/gmp-4.3.2                              4.3.2              GMP
 dev/gmp-5                                  5.0.5              Metapackage for GMP 5
 dev/gmp-5.0.5                              5.0.5              GMP
 dev/gperftools                             ->                 dev/gperftools-2.0
 dev/gperftools-2.0                         2.0                Gperftools
-dev/haskell-hashable                       ->                 dev/haskell-hashable-1.2.0.10
-dev/haskell-hashable-1.2.0.10              1.2.0.10           A class for types that can be converted to a hash value
+dev/haskell-cpphs                          ->                 dev/haskell-cpphs-1.13.3
+dev/haskell-cpphs-1.13.3                   1.13.3             A liberalised re-implementation of cpp, the C pre-processor.
+dev/haskell-happy                          ->                 dev/haskell-happy-1.18.10
+dev/haskell-happy-1.18.10                  1.18.10            Happy is a parser generator for Haskell
+dev/haskell-hashable                       ->                 dev/haskell-hashable-1.1.2.5
+dev/haskell-hashable-1.1.2.5               1.1.2.5            A class for types that can be converted to a hash value
+dev/haskell-haskell-src-exts               ->                 dev/haskell-haskell-src-exts-0.4.8
+dev/haskell-haskell-src-exts-0.4.8         0.4.8              Manipulating Haskell source: abstract syntax, lexer, parser, and pretty-printer
+dev/haskell-mtl                            ->                 dev/haskell-mtl-2.1.2
+dev/haskell-mtl-2.1.2                      2.1.2              Monad classes, using functional dependencies
+dev/haskell-syb                            ->                 dev/haskell-syb-0.4.1
+dev/haskell-syb-0.4.1                      0.4.1              Scrap Your Boilerplate
 dev/haskell-text                           ->                 dev/haskell-text-0.11.2.3
 dev/haskell-text-0.11.2.3                  0.11.2.3           An efficient packed Unicode text type.
+dev/haskell-transformers                   ->                 dev/haskell-transformers-0.3.0.0
+dev/haskell-transformers-0.3.0.0           0.3.0.0            Concrete functor and monad transformers
 dev/haskell-uniplate                       ->                 dev/haskell-uniplate-1.6.7
 dev/haskell-uniplate-1.6.7                 1.6.7              Help writing simple, concise and fast generic operations.
+dev/haskell-unordered-containers           ->                 dev/haskell-unordered-containers-0.2.3.1
+dev/haskell-unordered-containers-0.2.3.1   0.2.3.1            Efficient hashing-based container types
+dev/haskell-xml                            ->                 dev/haskell-xml-1.3.12
+dev/haskell-xml-1.3.12                     1.3.12             A simple XML library.
 dev/lablgtk2                               ->                 dev/lablgtk2-2.16.0
 dev/lablgtk2-2.16.0                        2.16.0             An Objective Caml interface to gtk2
 dev/libmpc                                 1.0.1              Metapackage for libmpc
@@ -92,6 +112,7 @@ sci/isabelle-2011                          2011-1             Isabelle proof ass
 sci/isabelle-2012                          2012               Isabelle proof assistant
 sci/isabelle-dist                          ->                 sci/isabelle-dist-2013
 sci/isabelle-dist-2013                     2013               Isabelle proof assistant (binary distribution)
+sci/isabelle-haskabelle-deps-2013          2013               Dummy package with dependencies for Haskabelle 2013
 sci/lem-git                                20130807           Lem, a tool for lightweight executable mathematics
 sci/nusmv-2                                ->                 sci/nusmv-2.5.4
 sci/nusmv-2.5.4                            2.5.4              New Symbolic Model Checker

@@ -1,0 +1,72 @@
+# Based on: https://projects.archlinux.org/svntogit/packages.git/tree/trunk/PKGBUILD
+
+source_pkg ".functions/build" "${repo}"
+
+version=7.4.2
+description="The Glasgow Haskell Compiler"
+depends=("dev/gmp")
+website="http://www.haskell.org/ghc/"
+license=('custom')
+
+provides=('dev/ghc'
+          'dev/haskell-array'
+          'dev/haskell-base'
+          'dev/haskell-binary'
+          'dev/haskell-bin-package-db'
+          'dev/haskell-bytestring'
+          'dev/haskell-containers'
+          'dev/haskell-deepseq'
+          'dev/haskell-directory'
+          'dev/haskell-extensible-exceptions'
+          'dev/haskell-filepath'
+          'dev/haskell-ghc-prim'
+          'dev/haskell-haskell2010'
+          'dev/haskell-haskell98'
+          'dev/haskell-hoopl'
+          'dev/haskell-hpc'
+          'dev/haskell-integer-gmp'
+          'dev/haskell-old-locale'
+          'dev/haskell-old-time'
+          'dev/haskell-pretty'
+          'dev/haskell-process'
+          'dev/haskell-template-haskell'
+          'dev/haskell-time'
+          'dev/haskell-unix'
+          'dev/haskell-cabal')
+
+isinstalled() {
+	type -p ghc &>/dev/null && ghc --version 2>&1 | grep -q "$version" &> /dev/null
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://www.haskell.org/ghc/dist/${version}/ghc-${version}-src.tar.bz2" \
+		"f2ee1289a33cc70539287129841acc7eaf16112bb60c59b5a6ee91887bfd836d"
+
+	cd "ghc-${version}"
+
+	fetch \
+		"${repo}/../support/ghc/silence-gen_contents_index.diff" \
+		"67b9d57949fa1668f42219b43a9b02a8f1174d1b93792d68231c101d71cef71c"
+
+	fetch \
+		"${repo}/../support/ghc/build.mk" \
+		"fc91b40b065eed6955f62bc26e0d0557362bea90c5fb989fa226448c023a0e91"
+
+	patch -Np1 -i silence-gen_contents_index.diff
+	mv build.mk mk/build.mk
+
+	./configure --prefix="${prefix}/usr"
+	make
+}
+
+installenv() {
+	cd ghc-${version}
+	make DESTDIR=${destdir} install
+}
+
+# vim: set ft=sh :

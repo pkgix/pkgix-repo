@@ -1,0 +1,43 @@
+
+version=1
+description="GHC wrapper"
+website="http://www.haskell.org/ghc"
+license=('public')
+
+isinstalled() { return 1; }
+iscompat()    { return 0; }
+
+_pkgdb="usr/lib/ghc/package.conf.d"
+if ghc-pkg --version 2>&1 | grep -q "package-db"; then
+	package_flag="package-db"
+else
+	package_flag="package-conf"
+fi
+
+build() {
+	reset_env
+
+	printf -- "%s" "#!/usr/bin/env bash
+exec $(type -p ghc) -${package_flag} \"${prefix%/}/${_pkgdb}\" \"\$@\"
+" > ghc
+
+	printf -- "%s" "#!/usr/bin/env bash
+exec $(type -p ghci) -${package_flag} \"${prefix%/}/${_pkgdb}\" \"\$@\"
+" > ghci
+
+	printf -- "%s" "#!/usr/bin/env bash
+exec $(type -p ghc-pkg) --${package_flag}=\"${prefix%/}/${_pkgdb}\" \"\$@\"
+" > ghc-pkg
+}
+
+installenv() {
+	install -Dm755 ghc "${destdir}/${prefix}/usr/bin/ghc"
+	install -Dm755 ghci "${destdir}/${prefix}/usr/bin/ghci"
+	install -Dm755 ghc-pkg "${destdir}/${prefix}/usr/bin/ghc-pkg"
+}
+
+postinstall() {
+	[[ ! -e "${prefix%/}/${_pkgdb}" ]] && ghc-pkg init "${prefix%/}/${_pkgdb}" || :
+}
+
+# vim: set ft=sh :

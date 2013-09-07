@@ -1,0 +1,46 @@
+
+source_pkg ".functions/build" "${repo}"
+
+provides=("dev/haskell-${_name}" "dev/haskell-${_name}-${_version}")
+
+isinstalled() { return 1; }
+iscompat() { return 0; }
+
+build() {
+	fetch_hackage "${_name}" "${_version}" "${_checksum}"
+
+	cd "${_name}-${_version}"
+
+	runhaskell Setup configure -O -p \
+		--enable-split-objs \
+		--enable-shared \
+		--prefix="${prefix}/usr" \
+		--docdir="${prefix}/usr/share/doc/${_name}" \
+		--libsubdir=\$compiler/site-local/\$pkgid \
+		|| return 1
+
+	runhaskell Setup build || return 1
+	runhaskell Setup haddock
+
+	runhaskell Setup register   --gen-script || return 1
+	runhaskell Setup unregister --gen-script || return 1
+
+	haskell_patch_register
+}
+
+installenv() {
+	cd "${_name}-${_version}"
+	runhaskell Setup copy --destdir="${destdir}" || return 1
+	install -D -m744 register.sh   "${dest_prefix}/usr/share/haskell/${_name}/register.sh"
+	install    -m744 unregister.sh "${dest_prefix}/usr/share/haskell/${_name}/unregister.sh"
+}
+
+eval "postinstall() {
+	\"\${prefix}/usr/share/haskell/${_name}/register.sh\"
+}"
+
+eval "preremove() {
+	\"\${prefix}/usr/share/haskell/${_name}/unregister.sh\"
+}"
+
+# vim: set ft=sh :

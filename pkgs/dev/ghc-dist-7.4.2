@@ -1,0 +1,55 @@
+
+source_pkg ".functions/build" "${repo}"
+
+version=7.4.2
+description="The Glasgow Haskell Compiler"
+depends=("dev/gmp-4")
+website="http://www.haskell.org/ghc/"
+license=('custom')
+provides=('dev/ghc' 'dev/ghc-7.4.2')
+
+isinstalled() {
+	type -p ghc &>/dev/null && ghc --version 2>&1 | grep -q "$version" &> /dev/null
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://www.haskell.org/ghc/dist/${version}/ghc-${version}-x86_64-unknown-linux.tar.bz2" \
+		"da962575e2503dec250252d72a94b6bf69baef7a567b88e90fd6400ada527210"
+
+	cd "ghc-${version}"
+
+	fetch \
+		"${repo}/../support/ghc/build.mk" \
+		"fc91b40b065eed6955f62bc26e0d0557362bea90c5fb989fa226448c023a0e91"
+
+	mv build.mk mk/build.mk
+
+	export LD_LIBRARY_PATH="${LIBRARY_PATH}"
+	./configure --prefix="${prefix}/usr"
+}
+
+installenv() {
+	cd ghc-${version}
+
+	export LD_LIBRARY_PATH="${LIBRARY_PATH}"
+	make DESTDIR=${destdir} install
+
+	cd "${dest_prefix}/usr/bin"
+
+	for x in *; do
+		mv "$x" "${x}.bin"
+		cat > "$x" <<EOF
+#/usr/bin/env bash
+export LD_LIBRARY_PATH="${LIBRARY_PATH}"
+exec "${prefix%/}/usr/bin/${x}.bin" "\$@"
+EOF
+		chmod +x "$x"
+	done
+}
+
+# vim: set ft=sh :

@@ -1,0 +1,13 @@
+
+_name=happy
+_version=1.18.10
+_checksum="c1c920f77906740252e261e2baec5b7519e584344d6080aa5a9cc0b677b9064b"
+source_pkg ".functions/generic-haskell" "${repo}"
+
+version="$_version"
+description="Happy is a parser generator for Haskell"
+depends=("dev/ghc" "dev/haskell-mtl")
+website="http://hackage.haskell.org/package/${_name}"
+license=('BSD3')
+
+# vim: set ft=sh :
