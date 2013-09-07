@@ -1,0 +1,45 @@
+
+version=2013
+description="Isabelle proof assistant (binary distribution)"
+depends=()
+license=('BSD')
+website="http://www.cl.cam.ac.uk/research/hvg/Isabelle/"
+
+isinstalled() { return 1; }
+iscompat() { return 0; }
+
+build() {
+	fetch_extract \
+		"http://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/Isabelle2013_linux.tar.gz" \
+		"eb786ba43b914e093ee4977275566ab89a8858fcb95ffa0406aa7e0e03d12750"
+
+	cd "Isabelle$version"
+
+	sed -i "s:ISABELLE_HOME_USER=.*$:ISABELLE_HOME_USER=\"${prefix}/usr/local/share/Isabelle${version%-*}\":" etc/settings
+}
+
+installenv() {
+	mkdir -p \
+		"${destdir}/${prefix}/usr/bin" \
+		"${destdir}/${prefix}/opt" \
+
+	cp -a "Isabelle$version" "${destdir}/${prefix}/opt/Isabelle$version"
+
+	cat > isabelle <<EOF
+#!/bin/sh
+exec "${prefix}/opt/Isabelle${version}/bin/isabelle" "\$@"
+EOF
+
+	cat > isabelle-process <<EOF
+#!/bin/sh
+exec "${prefix}/opt/Isabelle${version}/bin/isabelle-process" "\$@"
+EOF
+
+	install -D -m 0755 {isabelle,isabelle-process} "${destdir}/${prefix}/usr/bin"
+}
+
+postinstall() {
+	isabelle build -s -b HOL
+}
+
+# vim: set ft=sh:
