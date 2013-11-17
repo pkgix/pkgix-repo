@@ -39,4 +39,11 @@ haskell_patch_register() {
 	sed -i -r -e "s|ghc-pkg.*unregister[^ ]* |&'--force' |" -e "s|'--global' ||" unregister.sh
 }
 
+if (( ${PKGIX_PARALLEL_BUILD:-0} )); then
+	_make="$(which make)"
+	make() {
+		$_make -j $(nproc) "$@"
+	}
+fi
+
 # vim: set ft=sh :

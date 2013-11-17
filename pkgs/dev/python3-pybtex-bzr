@@ -1,5 +1,5 @@
 
-version=0.16
+version=20131117
 description="Pybtex"
 website="http://pybtex.sourceforge.net"
 license=('GPL')
@@ -12,13 +12,12 @@ isinstalled() {
 iscompat() { return 0; }
 
 build() {
-	fetch_extract \
-		"http://pypi.python.org/packages/source/p/pybtex/pybtex-${version}.tar.bz2" \
-		"0fd576e7f93327c69da6326b08a0ce75921bb727de351b67a8db17b9f29e32b7"
+	wget "http://bazaar.launchpad.net/~pybtex-devs/pybtex/trunk/tarball/892?start_revid=892" -O "pybtex.tar.gz"
+	extract_archive "pybtex.tar.gz"
 }
 
 installenv() {
-	cd "pybtex-${version}"
+	cd "~pybtex"*"/pybtex/trunk"
 	python3 setup.py install --prefix="${prefix}/usr" --root="${destdir}" --optimize=1
 }
 
