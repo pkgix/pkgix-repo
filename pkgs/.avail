@@ -97,7 +97,7 @@ dev/python3-sphinxcontrib-bibtex-0.2.9     0.2.9              A Sphinx extension
 dev/python3-unidecode                      ->                 dev/python3-unidecode-0.04.13
 dev/python3-unidecode-0.04.11              0.04.11            ASCII transliterations of Unicode text
 dev/python3-unidecode-0.04.13              0.04.13            ASCII transliterations of Unicode text
-dev/python3-wrapper                        20131117           Python 3 wrapper to set PYTHONPATH properly
+dev/python3-wrapper                        20140114           Python 3 wrapper to set PYTHONPATH properly
 dev/python3-yaml                           ->                 dev/python3-yaml-3.10
 dev/python3-yaml-3.10                      3.10               PyYAML
 dev/readline                               6.2                Metapackage for readline
@@ -117,7 +117,7 @@ sci/cvc3-2.4.1                             2.4.1              Automatic theorem 
 sci/isabelle-2011                          2011-1             Isabelle proof assistant
 sci/isabelle-2012                          2012               Isabelle proof assistant
 sci/isabelle-dist                          ->                 sci/isabelle-dist-2013
-sci/isabelle-dist-2013                     2013               Isabelle proof assistant (binary distribution)
+sci/isabelle-dist-2013                     2013-2             Isabelle proof assistant (binary distribution)
 sci/isabelle-haskabelle-deps-2013          2013               Dummy package with dependencies for Haskabelle 2013
 sci/nusmv-2                                ->                 sci/nusmv-2.5.4
 sci/nusmv-2.5.4                            2.5.4              New Symbolic Model Checker

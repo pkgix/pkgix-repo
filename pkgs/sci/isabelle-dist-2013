@@ -1,5 +1,5 @@
 
-version=2013
+version=2013-2
 description="Isabelle proof assistant (binary distribution)"
 depends=()
 license=('BSD')
@@ -10,8 +10,8 @@ iscompat() { return 0; }
 
 build() {
 	fetch_extract \
-		"http://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/Isabelle2013_linux.tar.gz" \
-		"eb786ba43b914e093ee4977275566ab89a8858fcb95ffa0406aa7e0e03d12750"
+		"http://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/Isabelle${version}_linux.tar.gz" \
+		"b3387dffab3527c97707bafe6124a7f21530758eb6f6119a9df45265017558e1"
 
 	cd "Isabelle$version"
 
