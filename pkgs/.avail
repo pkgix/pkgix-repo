@@ -17,8 +17,9 @@ dev/gmp-4                                  4.3.2              Metapackage for GM
 dev/gmp-4.3.2                              4.3.2              GMP
 dev/gmp-5                                  5.0.5              Metapackage for GMP 5
 dev/gmp-5.0.5                              5.0.5              GMP
-dev/gperftools                             ->                 dev/gperftools-2.0
+dev/gperftools                             ->                 dev/gperftools-2.1
 dev/gperftools-2.0                         2.0                Gperftools
+dev/gperftools-2.1                         2.1                Gperftools
 dev/haskell-cpphs                          ->                 dev/haskell-cpphs-1.13.3
 dev/haskell-cpphs-1.13.3                   1.13.3             A liberalised re-implementation of cpp, the C pre-processor.
 dev/haskell-happy                          ->                 dev/haskell-happy-1.18.10
@@ -54,8 +55,8 @@ dev/ocaml-3.12                             ->                 dev/ocaml-3.12.1
 dev/ocaml-3.12.1                           3.12.1             A functional language with OO extensions
 dev/ocaml-4.00                             ->                 dev/ocaml-4.00.1
 dev/ocaml-4.00.1                           4.00.1             A functional language with OO extensions
-dev/pcre                                   ->                 dev/pcre-8.31
-dev/pcre-8.31                              8.31               Perl style regular expressions library
+dev/pcre                                   ->                 dev/pcre-8.34
+dev/pcre-8.34                              8.34               Perl style regular expressions library
 dev/polyml-5.4                             ->                 dev/polyml-5.4.1
 dev/polyml-5.4.1                           5.4.1              Poly/ML: Standard ML (SML) implementation
 dev/polyml-5.5                             ->                 dev/polyml-5.5.0
@@ -68,6 +69,8 @@ dev/python2-2.6.8                          2.6.8              The Python 2 inter
 dev/python2-2.7                            ->                 dev/python2-2.7.3
 dev/python2-2.7.3                          2.7.3              The Python 2 interpreter
 dev/python2-scons-2.2.0                    2.2.0              Scons build system 2.2.0
+dev/python2-scons-2.3.0                    2.3.0              Scons build system 2.3.0
+dev/python2-wrapper                        20140210           Python 2 wrapper to set PYTHONPATH properly
 dev/python3                                3.2.3              Metapackage for Python 3
 dev/python3-3.2.3                          3.2.3              The Python 3 interpreter
 dev/python3-3.3.0                          3.3.0              The Python 3 interpreter
@@ -97,7 +100,7 @@ dev/python3-sphinxcontrib-bibtex-0.2.9     0.2.9              A Sphinx extension
 dev/python3-unidecode                      ->                 dev/python3-unidecode-0.04.13
 dev/python3-unidecode-0.04.11              0.04.11            ASCII transliterations of Unicode text
 dev/python3-unidecode-0.04.13              0.04.13            ASCII transliterations of Unicode text
-dev/python3-wrapper                        20140114           Python 3 wrapper to set PYTHONPATH properly
+dev/python3-wrapper                        20140210           Python 3 wrapper to set PYTHONPATH properly
 dev/python3-yaml                           ->                 dev/python3-yaml-3.10
 dev/python3-yaml-3.10                      3.10               PyYAML
 dev/readline                               6.2                Metapackage for readline

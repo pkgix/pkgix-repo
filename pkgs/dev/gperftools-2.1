@@ -1,7 +1,7 @@
 
 source_pkg ".functions/build" "${repo}"
 
-version=2.0
+version=2.1
 description="Gperftools"
 depends=()
 website="http://code.google.com/p/gperftools"
@@ -18,7 +18,7 @@ iscompat() {
 build() {
 	fetch_extract \
 		"http://gperftools.googlecode.com/files/gperftools-$version.tar.gz" \
-		"7de3dd91f018825b1e7d332af1edace15c6211f430186febede1835069861080"
+		"f3ade29924f89409d8279ab39e00af7420593baa4941c318db42e70ead7e494f"
 
 	cd "gperftools-${version}"
 

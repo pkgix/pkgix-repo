@@ -1,0 +1,32 @@
+# For a much better solution, see `virtualenv`. This case suffices for
+# my simple usecases.
+
+# version hack: Update wrapper on upgrade, in case system python site-packages
+# path changed
+version="$(date +"%Y%m%d")"
+description="Python 2 wrapper to set PYTHONPATH properly"
+website="http://www.python.org"
+license=('public')
+
+isinstalled() { return 1; }
+iscompat()    { return 0; }
+
+build() {
+	reset_env
+
+	_site_packages="${prefix}$(python2 -c \
+		"from distutils.sysconfig import get_python_lib; print(get_python_lib())")"
+	_export_PYTHONPATH="export PYTHONPATH=\"${_site_packages}:\${PYTHONPATH:-}\""
+
+	printf -- "%s" "#!/usr/bin/env bash
+${_export_PYTHONPATH}
+exec $(type -p python2) \"\$@\"
+" > python2
+}
+
+installenv() {
+	install -Dm755 python2 "${destdir}/${prefix}/usr/bin/python2"
+	ln -s python2 "${destdir}/${prefix}/usr/bin/python"
+}
+
+# vim: set ft=sh :
