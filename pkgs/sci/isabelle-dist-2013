@@ -8,6 +8,44 @@ website="http://www.cl.cam.ac.uk/research/hvg/Isabelle/"
 isinstalled() { return 1; }
 iscompat() { return 0; }
 
+_patch_generic() {
+	echo "Patching Isabelle for generic platform ..."
+
+	sed -i 's/ISABELLE_PLATFORM64=x86_64-linux.*$/ISABELLE_PLATFORM64=x86_64-linux\n;;\n*)\nISABELLE_PLATFORM32=generic-linux\nISABELLE_PLATFORM64=generic-linux/' lib/scripts/isabelle-platform
+
+	if ! type -p java &> /dev/null; then
+		die 'Require external Java\n'
+	fi
+
+	mkdir -p contrib/jdk/generic-linux/bin
+	ln -s "$(which java)" contrib/jdk/generic-linux/bin/java
+
+	pushd contrib/polyml-* &>/dev/null
+	mkdir generic-linux
+
+	cd sha1
+	sed -i 's/-m32//g' build
+	./build x86-linux
+	mv x86-linux/lib* ../generic-linux
+	rm -r x86-linux
+
+	cd ../generic-linux
+
+	if ! type -p poly &> /dev/null; then
+		die 'Require external PolyML\n'
+	fi
+
+	for x in poly polyc polyimport; do
+		cat > $x <<EOF
+#!/bin/sh
+exec "$(which $x)" "\$@"
+EOF
+		chmod +x $x
+	done
+
+	popd &> /dev/null
+}
+
 build() {
 	fetch_extract \
 		"http://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/Isabelle${version}_linux.tar.gz" \
@@ -16,6 +54,10 @@ build() {
 	cd "Isabelle$version"
 
 	sed -i "s:ISABELLE_HOME_USER=.*$:ISABELLE_HOME_USER=\"${prefix}/usr/local/share/Isabelle${version%-*}\":" etc/settings
+
+	if bin/isabelle 2>&1 | grep -Fxq 'Failed to determine hardware and operating system type!'; then
+		_patch_generic "$@"
+	fi
 }
 
 installenv() {

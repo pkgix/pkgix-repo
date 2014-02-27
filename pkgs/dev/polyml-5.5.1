@@ -1,0 +1,36 @@
+
+source_pkg ".functions/build" "${repo}"
+
+version=5.5.1
+description="Poly/ML: Standard ML (SML) implementation"
+depends=('dev/gmp')
+website="http://www.polyml.org"
+license=('GPL2')
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://downloads.sourceforge.net/project/polyml/polyml/${version}/polyml.${version}.tar.gz" \
+		"cf8009dabc8b5d308d92e201dcd01f17ce14289d30caa8021a87365f4b8e209a"
+
+	cd "polyml.${version}"
+
+	build_wrap_ldflags ./configure \
+		--prefix="${prefix}/usr"
+
+	make
+}
+
+installenv() {
+	cd "polyml.${version}"
+	make DESTDIR="${destdir}" install
+}
+
+# vim: set ft=sh :
