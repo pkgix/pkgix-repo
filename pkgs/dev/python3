@@ -1,5 +1,5 @@
 
-version=3.2.3
+version=3.3
 description="Metapackage for Python 3"
 
 _satisfied() {
@@ -8,6 +8,6 @@ _satisfied() {
 
 _satisfied && metapkg=dev/python3-wrapper || metapkg=dev/python3-$version
 
-satisfied() { return 1; }
+satisfied() { [[ -f "${prefix}/usr/bin/python3" ]]; }
 
 # vim: set ft=sh :

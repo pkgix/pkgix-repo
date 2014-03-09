@@ -1,1 +1,63 @@
-dev/python2-2.7.3
+# Based on: https://projects.archlinux.org/svntogit/packages.git/tree/trunk/PKGBUILD?h=packages/python2
+source_pkg ".functions/build" "${repo}"
+
+
+version=2.7.3
+description="The Python 2 interpreter"
+depends=("dev/gdbm" "dev/readline")
+website="http://www.python.org"
+license=('PSF')
+
+_pybasever="${version%.*}"
+
+isinstalled() {
+	type -p python2 &>/dev/null && python2 --version 2>&1 | grep -q "$version" &> /dev/null
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://www.python.org/ftp/python/${version}/Python-${version}.tar.bz2" \
+		"726457e11cb153adc3f428aaf1901fc561a374c30e5e7da6742c0742a338663c"
+
+	cd "Python-${version}"
+
+	# See http://bugs.python.org/issue10835 for upstream report
+	sed -i "/progname =/s/python/python${_pybasever}/" Python/pythonrun.c
+
+	# Enable built-in SQLite module to load extensions
+	sed -i "/SQLITE_OMIT_LOAD_EXTENSION/d" setup.py
+
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr" --enable-shared --with-threads --enable-ipv6 \
+	            --enable-unicode=ucs4 --with-system-expat --with-system-ffi \
+	            --with-dbmliborder=gdbm:ndbm
+
+	make 
+}
+
+installenv() {
+	cd "Python-${version}"
+	make DESTDIR="${destdir}" altinstall maninstall
+
+	ln -sf python${_pybasever} "${destdir}/${prefix}/usr/bin/python2"
+
+	ln -sf ../../libpython${_pybasever}.so \
+		"${destdir}/${prefix}/usr/lib/python${_pybasever}/config/libpython${_pybasever}.so"
+
+	mv "${destdir}/${prefix}/usr/bin/smtpd.py" "${destdir}/${prefix}/usr/lib/python${_pybasever}/"
+
+	# fix conflicts with python
+	mv "${destdir}/${prefix}/usr"/bin/idle{,${_pybasever}}
+	mv "${destdir}/${prefix}/usr"/bin/pydoc{,${_pybasever}}
+	mv "${destdir}/${prefix}/usr"/bin/2to3{,-${_pybasever}}
+	mv "${destdir}/${prefix}/usr"/share/man/man1/python{.1,${_pybasever}.1}
+
+	# clean up #!s
+	find "${destdir}/${prefix}/usr/lib/python${_pybasever}/" -name '*.py' | \
+		xargs sed -i "s|#[ ]*![ ]*/usr/bin/env python$|#!/usr/bin/env python${_pybasever}|"
+}
+
+# vim: set ft=sh :

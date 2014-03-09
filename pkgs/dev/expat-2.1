@@ -1,0 +1,34 @@
+
+source_pkg ".functions/build" "${repo}"
+
+version=2.1.0
+description="An XML parser library"
+depends=()
+website="http://expat.sourceforge.net"
+license=('custom')
+
+isinstalled() {
+	[[ -f "/usr/include/expat.h" ]]
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://downloads.sourceforge.net/sourceforge/expat/expat-${version}.tar.gz" \
+		"823705472f816df21c8f6aa026dd162b280806838bb55b3432b0fb1fcca7eb86"
+
+	cd "expat-${version}"
+
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr"
+	make
+}
+
+installenv() {
+	cd "expat-${version}"
+	make DESTDIR="${destdir}" install
+}
+
+# vim: set ft=sh :

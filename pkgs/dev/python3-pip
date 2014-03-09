@@ -1,0 +1,32 @@
+
+source_pkg ".functions/build" "${repo}"
+
+version=1.5.4
+description="An easy_install replacement for installing pypi python packages"
+depends=("dev/python3" "dev/python3-setuptools")
+website="http://www.pip-installer.org"
+license=('MIT') 
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://pypi.python.org/packages/source/p/pip/pip-${version}.tar.gz" \
+		"70208a250bb4afdbbdd74c3ac35d4ab9ba1eb6852d02567a6a87f2f5104e30b9"
+
+	cd "pip-${version}"
+	python3 setup.py build
+}
+
+installenv() {
+	cd "pip-${version}"
+	python3 setup.py install --prefix="${prefix}/usr" --root="${destdir}"
+	sed -i 's|^#!/.*$|#!/usr/bin/env python3|' "${dest_prefix}/usr/bin/"*
+}
+
+# vim: set ft=sh :

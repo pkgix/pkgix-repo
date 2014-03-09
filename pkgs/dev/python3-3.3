@@ -2,7 +2,7 @@
 source_pkg ".functions/build" "${repo}"
 
 
-version=3.3.0
+version=3.3.4
 description="The Python 3 interpreter"
 depends=("dev/gdbm" "dev/readline")
 website="http://www.python.org"
@@ -20,8 +20,8 @@ iscompat() {
 
 build() {
 	fetch_extract \
-		"http://www.python.org/ftp/python/${version}/Python-${version}.tar.bz2" \
-		"15c113fd6c058712f05d31b4eff149d4d823b8e39ef5e37228dc5dc4f8716df9"
+		"http://www.python.org/ftp/python/${version}/Python-${version}.tar.xz" \
+		"c6cc126d91c04e0348882cfbd36d7a844d4e50acc37a3f6a64d67764e3995689"
 
 	cd "Python-${version}"
 
@@ -30,9 +30,9 @@ build() {
 		--with-threads \
 		--with-computed-gotos \
 		--enable-ipv6 \
-		--with-system-expat \
 		--with-dbmliborder=gdbm:ndbm \
 		--with-system-ffi
+		#--with-system-expat \
 	
 	make
 }

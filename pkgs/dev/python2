@@ -8,6 +8,6 @@ _satisfied() {
 
 _satisfied && metapkg=dev/python2-wrapper || metapkg=dev/python2-$version
 
-satisfied() { return 1; }
+satisfied() { [[ -f "${prefix}/usr/bin/python2" ]];; }
 
 # vim: set ft=sh :
