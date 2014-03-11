@@ -1,9 +1,15 @@
 
-metapkg=dev/readline-6.2
-version=6.2
-description="Metapackage for readline"
+source_pkg ".functions/build" "${repo}"
 
-satisfied() {
+version=6.2
+description="GNU readline"
+depends=()
+website="http://tiswww.case.edu/php/chet/readline/rltop.html"
+license=('GPL')
+forceinstall=('usr/share/info/dir')
+backup=('etc/inputrc')
+
+isinstalled() {
 	local headerpath
 	local old_IFS="$IFS"
 	IFS=":"
@@ -17,7 +23,38 @@ satisfied() {
 	done
 	IFS="$old_IFS"
 
-	[[ -n "$headerpath" ]]
+	if [[ -z "$headerpath" ]]; then
+		return 1
+	else
+		grep -q $'^#define[ \t]*RL_READLINE_VERSION[ \t]*0x0602' "$headerpath"
+	fi
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	
+	fetch_extract \
+		"http://ftp.gnu.org/gnu/readline/readline-$version.tar.gz" \
+		"79a696070a058c233c72dd6ac697021cc64abd5ed51e59db867d66d196a89381"
+
+	cd "readline-${version}"
+
+	fetch \
+		"${repo}/../support/etc/inputrc" \
+		"36e9611f935ee108d161587b0615f9c390192ef4bbff6dc59b58671261029901"
+
+	sed -i "s:^#define SYS_INPUTRC \"/etc/inputrc\":#define SYS_INPUTRC \"${prefix}/etc/inputrc\":" rlconf.h
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr"
+	make SHLIB_LIBS=-lncurses
+}
+
+installenv() {
+	cd "readline-${version}"
+	make DESTDIR="${destdir}" install
+	install -Dm644 inputrc "${destdir}/${prefix}/etc/inputrc"
 }
 
 # vim: set ft=sh :

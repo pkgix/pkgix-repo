@@ -1,0 +1,30 @@
+
+source_pkg ".functions/build" "${repo}"
+
+version=2.2
+description="Easily download, build, install, upgrade, and uninstall Python packages"
+website="http://pypi.python.org/pypi/setuptools"
+license=('PSF')
+depends=('dev/python2')
+
+isinstalled() {
+	python2 -c 'import setuptools' &>/dev/null
+}
+
+iscompat()    { return 0; }
+
+build() {
+	fetch_extract \
+		"http://pypi.python.org/packages/source/s/setuptools/setuptools-${version}.tar.gz" \
+		"6fb1f21dea64e323e7ad2531a6795eeb6f5e17a85189dee61a86baca60b18984"
+
+	cd "setuptools-${version}"
+	python2 setup.py build
+}
+
+installenv() {
+	cd "setuptools-${version}"
+	python2 setup.py install --prefix="${prefix}/usr" --root="${destdir}" --optimize=1 --skip-build
+}
+
+# vim: set ft=sh :

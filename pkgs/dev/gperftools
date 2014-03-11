@@ -1,1 +1,38 @@
-dev/gperftools-2.1
+
+source_pkg ".functions/build" "${repo}"
+
+version=2.1
+description="Gperftools"
+depends=()
+website="http://code.google.com/p/gperftools"
+license=('BSD')
+
+isinstalled() {
+	type -p pprof &> /dev/null && pprof --version | grep -q "gperftools $version"
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://gperftools.googlecode.com/files/gperftools-$version.tar.gz" \
+		"f3ade29924f89409d8279ab39e00af7420593baa4941c318db42e70ead7e494f"
+
+	cd "gperftools-${version}"
+
+	# glibc 2.16 fix
+	ldd --version | grep -q '(GNU libc) 2.16$' && sed -i 's:siginfo_t:siginfo:' src/base/linuxthreads.cc
+
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr" --enable-frame-pointers
+
+	make
+}
+
+installenv() {
+	cd "gperftools-${version}"
+	make DESTDIR="${destdir}" install
+}
+
+# vim: set ft=sh :

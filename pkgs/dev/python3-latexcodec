@@ -1,1 +1,25 @@
-dev/python3-latexcodec-0.3.0
+
+version=0.3.0
+description="Latexcodec"
+website="https://pypi.python.org/pypi/latexcodec/"
+license=('MIT')
+depends=('dev/python3')
+
+isinstalled() {
+	python3 -c 'import latexcodec' &>/dev/null
+}
+
+iscompat() { return 0; }
+
+build() {
+	fetch_extract \
+		"http://pypi.python.org/packages/source/l/latexcodec/latexcodec-${version}.zip" \
+		"8988c88b69016787271e8042ffa9486d514b51b5091c94606169980ee852ddd7"
+}
+
+installenv() {
+	cd "latexcodec-${version}"
+	python3 setup.py install --prefix="${prefix}/usr" --root="${destdir}" --optimize=1
+}
+
+# vim: set ft=sh :

@@ -1,1 +1,53 @@
-dev/gcc-4.4.7
+
+source_pkg ".functions/build" "${repo}"
+
+version=4.4.7
+description="The GCC compiler"
+depends=()
+website="http://gcc.gnu.org/"
+license=('GPL' 'LGPL' 'FDL' 'custom')
+
+isinstalled() {
+	gcc --version | grep -q " $version " &> /dev/null
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract "http://www.mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-${version}/gcc-${version}.tar.bz2" \
+		"5ff75116b8f763fa0fb5621af80fc6fb3ea0f1b1a57520874982f03f26cd607f"
+
+	cd "gcc-${version}"
+
+	build_wrap_ldflags ./configure \
+		--prefix="${prefix}/usr" \
+		--mandir="${prefix}/usr/share/man" \
+		--infodir="${prefix}/usr/share/info" \
+		--libdir="${prefix}/usr/lib" \
+		--libexecdir="${prefix}/usr/lib" \
+		--enable-shared \
+		--enable-languages=c,c++,fortran,objc,obj-c++ \
+		--enable-__cxa_atexit \
+		--disable-libstdcxx-pch \
+		--disable-multilib \
+		--disable-libgomp \
+		--disable-libmudflap \
+		--disable-libssp \
+		--enable-clocale=gnu \
+		--with-tune=generic \
+		--with-cloog \
+		--with-ppl \
+		--with-system-zlib
+
+	make
+}
+
+installenv() {
+	cd "gcc-${version}"
+	make DESTDIR="${destdir}" install
+	ln -s gcc "${destdir}/${prefix}/usr/bin/cc"
+}
+
+# vim: set ft=sh :

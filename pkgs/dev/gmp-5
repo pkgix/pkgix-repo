@@ -1,9 +1,14 @@
 
-metapkg=dev/gmp-5.0.5
-version=5.0.5
-description="Metapackage for GMP 5"
+source_pkg ".functions/build" "${repo}"
 
-satisfied() {
+version=5.0.5
+description="GMP"
+depends=()
+website="http://gmplib.org"
+license=('LGPL3')
+forceinstall=('usr/share/info/dir')
+
+isinstalled() {
 	local headerpath
 	local old_IFS="$IFS"
 	IFS=":"
@@ -22,6 +27,26 @@ satisfied() {
 	else
 		grep -q '__GNU_MP_VERSION[ \t]*5$' "$headerpath"
 	fi
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"ftp://ftp.gnu.org/gnu/gmp/gmp-${version}.tar.bz2" \
+		"1f588aaccc41bb9aed946f9fe38521c26d8b290d003c5df807f65690f2aadec9"
+
+	cd "gmp-${version}"
+
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr" --enable-cxx
+	make
+}
+
+installenv() {
+	cd "gmp-${version}"
+	make DESTDIR="${destdir}" install
 }
 
 # vim: set ft=sh :

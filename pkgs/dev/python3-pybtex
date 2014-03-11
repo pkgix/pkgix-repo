@@ -1,1 +1,25 @@
-dev/python3-pybtex-bzr
+
+version=0.17
+description="Pybtex"
+website="http://pybtex.sourceforge.net"
+license=('GPL')
+depends=('dev/python3' 'dev/python3-yaml')
+
+isinstalled() {
+	python3 -c 'import pybtex' &>/dev/null
+}
+
+iscompat() { return 0; }
+
+build() {
+	fetch_extract \
+		"http://pypi.python.org/packages/source/p/pybtex/pybtex-${version}.tar.bz2" \
+		"fccd2912dc58a60d29d46b11c86f0357f65c9e3793dc7323f40f092858410a18"
+}
+
+installenv() {
+	cd "pybtex-${version}"
+	python3 setup.py install --prefix="${prefix}/usr" --root="${destdir}" --optimize=1
+}
+
+# vim: set ft=sh :

@@ -1,9 +1,14 @@
 
-metapkg=dev/libmpc-1.0.1
-version=1.0.1
-description="Metapackage for libmpc"
+source_pkg ".functions/build" "${repo}"
 
-satisfied() {
+version=1.0.1
+description="libmpc"
+depends=('dev/mpfr')
+website="http://www.multiprecision.org"
+license=('LGPL')
+forceinstall=('usr/share/info/dir')
+
+isinstalled() {
 	local headerpath
 	local old_IFS="$IFS"
 	IFS=":"
@@ -18,6 +23,26 @@ satisfied() {
 	IFS="$old_IFS"
 
 	[[ -n "$headerpath" ]]
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://www.multiprecision.org/mpc/download/mpc-${version}.tar.gz" \
+		"ed5a815cfea525dc778df0cb37468b9c1b554aaf30d9328b1431ca705b7400ff"
+
+	cd "mpc-${version}"
+
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr"
+	make
+}
+
+installenv() {
+	cd "mpc-${version}"
+	make DESTDIR="${destdir}" install
 }
 
 # vim: set ft=sh :

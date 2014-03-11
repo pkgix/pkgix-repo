@@ -2,7 +2,7 @@
 
 version=2.40.65
 description="Unison file-synchronization tool"
-depends=('dev/ocaml' 'dev/lablgtk2')
+depends=('dev/ocaml')
 website="http://www.cis.upenn.edu/~bcpierce/unison"
 license=('GPL2')
 
