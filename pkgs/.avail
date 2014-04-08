@@ -3,6 +3,7 @@ dev/expat                                  2.1.0              An XML parser libr
 dev/gcc-4.4                                4.4.7              The GCC compiler
 dev/gcc-4.6                                4.6.3              The GCC compiler
 dev/gcc-4.7                                4.7.2              The GCC compiler
+dev/gcc-env2args                           0.1                GCC Environment to Args wrapper script
 dev/gdbm                                   1.10               GNU dbm
 dev/ghc                                    1                  Metapackage for GHC
 dev/ghc-7.4.2                              7.4.2              The Glasgow Haskell Compiler

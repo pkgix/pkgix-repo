@@ -1,0 +1,24 @@
+
+source_pkg ".functions/build" "${repo}"
+
+version=0.1
+description="GCC Environment to Args wrapper script"
+depends=()
+website="http://pkgix.org"
+license=('GPL')
+
+isinstalled() { return 1; }
+iscompat() { return 0; }
+
+build() {
+	fetch \
+		"${repo}/../support/gcc/gcc-env2args" \
+		"3b90b772702920792f9b2ba0e8ff6fbe443f9f250cdcb669dd12c1d66dbe5867"
+}
+
+installenv() {
+	install -Dm755 gcc-env2args "${dest_prefix}/usr/bin/gcc-env2args"
+	ln -s gcc-env2args "${dest_prefix}/usr/bin/g++-env2args"
+}
+
+# vim: set ft=sh :

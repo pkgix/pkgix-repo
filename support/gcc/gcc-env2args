@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Maintainer: Marco Elver
+
+: ${GCC_ENV2ARGS_RPATH_ONLY:=1}
+
+binary="${0##*/}"
+path="${0%/*}"
+args=( -Wl,-rpath="$LIBRARY_PATH" )
+
+if (( ! GCC_ENV2ARGS_RPATH_ONLY )); then
+	IFS=":" read -ra tmp <<< "$LIBRARY_PATH"
+	for x in "${tmp[@]}"; do
+		args+=("-L${x}")
+	done
+
+	IFS=":" read -ra tmp <<< "$CPATH"
+	for x in "${tmp[@]}"; do
+		args+=("-I${x}")
+	done
+fi
+
+exec "${path}/${binary%%-env2args}" "${args[@]}" "$@"
