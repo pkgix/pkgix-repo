@@ -1,12 +1,13 @@
 
 source_pkg ".functions/build" "${repo}"
 
-version=4.7.2
+version=4.7.3
 description="The GCC compiler"
 depends=('dev/gmp-5' 'dev/mpfr-3' 'dev/libmpc' 'dev/ppl')
 website="http://gcc.gnu.org/"
 license=('GPL' 'LGPL' 'FDL' 'custom')
 forceinstall=('usr/share/info/dir')
+_languages="c,c++,fortran"
 
 isinstalled() {
 	gcc --version | grep -q " $version " &> /dev/null
@@ -19,7 +20,7 @@ iscompat() {
 build() {
 	fetch_extract \
 		"ftp://gcc.gnu.org/pub/gcc/releases/gcc-${version}/gcc-${version}.tar.bz2" \
-		"8a9283d7010fb9fe5ece3ca507e0af5c19412626384f8a5e9434251ae100b084"
+		"2f7c37eb4fc14422ff2358a9ef59c974a75ab41204ef0e49fc34ab1d8981a9c3"
 
 	cd "gcc-${version}"
 
@@ -47,7 +48,7 @@ build() {
 	build_wrap_ldflags ./configure --prefix="${prefix}/usr" \
 		--libdir="${prefix}/usr/lib" --libexecdir="${prefix}/usr/lib" \
 		--mandir="${prefix}/usr/share/man" --infodir="${prefix}/usr/share/info" \
-		--enable-languages=c,c++,fortran \
+		--enable-languages="${_languages}" \
 		--enable-shared --enable-threads=posix \
 		--with-system-zlib --enable-__cxa_atexit \
 		--disable-libunwind-exceptions --enable-clocale=gnu \

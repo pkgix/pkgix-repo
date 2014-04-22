@@ -1,9 +1,9 @@
 
 source_pkg ".functions/build" "${repo}"
 
-version=1.0
+version=1.1
 description="PPL"
-depends=(dev/gmp-5)
+depends=("dev/gmp-5")
 website="http://bugseng.com/products/ppl"
 license=('GPL3')
 
@@ -31,15 +31,9 @@ iscompat() {
 build() {
 	fetch_extract \
 		"http://bugseng.com/products/ppl/download/ftp/releases/${version}/ppl-${version}.tar.gz" \
-		"fd346687482ad51c1e98eb260bd61dd5a35a0cff5f580404380c88b0089a71b4"
+		"46f073c0626234f0b1a479356c0022fe5dc3c9cf10df1a246c9cde81f7cf284d"
 
 	cd "ppl-${version}"
-
-	fetch \
-		"${repo}/../support/patches/dev/ppl-1.0_gmp-5.1.patch" \
-		"dbe3e5184469253ddd832d25e9df40dd8daaad3bf0ab7b985e43e0c21f450208"
-
-	patch -Np1 -i ppl-1.0_gmp-5.1.patch
 
 	build_wrap_ldflags ./configure --prefix="${prefix}/usr" --enable-interfaces="c,cxx" --with-gmp="${prefix}/usr"
 	make

@@ -1,6 +1,6 @@
 
-metapkg=dev/mpfr-3.1.1
-version=3.1.1
+metapkg=dev/mpfr-3
+version=3.1.2
 description="Metapackage for MPFR"
 
 satisfied() {

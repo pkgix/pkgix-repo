@@ -2,11 +2,13 @@
 source_pkg ".functions/build" "${repo}"
 
 
-version=4.6.3
+version=4.6.4
 description="The GCC compiler"
-depends=('dev/gmp-5' 'dev/mpfr-3' 'dev/libmpc')
+depends=('dev/gmp-5' 'dev/mpfr-3' 'dev/libmpc' 'dev/ppl')
 website="http://gcc.gnu.org/"
 license=('GPL' 'LGPL' 'FDL' 'custom')
+forceinstall=('usr/share/info/dir')
+_languages="c,c++,fortran"
 
 isinstalled() {
 	gcc --version | grep -q " $version " &> /dev/null
@@ -18,16 +20,8 @@ iscompat() {
 
 build() {
 	fetch_extract \
-		"ftp://gcc.gnu.org/pub/gcc/releases/gcc-$version/gcc-core-$version.tar.bz2" \
-		"283e00881c0de258fafc5170843e4d9b14ee2a7dc4426f0d426e6be0400251c1"
-
-	fetch_extract \
-		"ftp://gcc.gnu.org/pub/gcc/releases/gcc-$version/gcc-fortran-$version.tar.bz2" \
-		"fe1bdf3485f33e6d0a998ff7bcb42526fbf3083dbfc107c3d95a88c00739eadb"
-
-	fetch_extract \
-		"ftp://gcc.gnu.org/pub/gcc/releases/gcc-$version/gcc-g++-$version.tar.bz2" \
-		"b3e0c733e900e99096b0c5480f57e22e3e583ec3d83596cc2cb9986bd64b29e8"
+		"ftp://gcc.gnu.org/pub/gcc/releases/gcc-${version}/gcc-${version}.tar.bz2" \
+		"35af16afa0b67af9b8eb15cafb76d2bc5f568540552522f5dc2c88dd45d977e8"
 
 	cd "gcc-${version}"
 
@@ -55,7 +49,7 @@ build() {
 	build_wrap_ldflags ./configure --prefix="${prefix}/usr" \
 		--libdir="${prefix}/usr/lib" --libexecdir="${prefix}/usr/lib" \
 		--mandir="${prefix}/usr/share/man" --infodir="${prefix}/usr/share/info" \
-		--enable-languages=c,c++,fortran \
+		--enable-languages="${_languages}" \
 		--enable-shared --enable-threads=posix \
 		--with-system-zlib --enable-__cxa_atexit \
 		--enable-clocale=gnu \

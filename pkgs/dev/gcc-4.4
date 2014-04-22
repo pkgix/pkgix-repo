@@ -6,6 +6,7 @@ description="The GCC compiler"
 depends=()
 website="http://gcc.gnu.org/"
 license=('GPL' 'LGPL' 'FDL' 'custom')
+_languages="c,c++,fortran"
 
 isinstalled() {
 	gcc --version | grep -q " $version " &> /dev/null
@@ -16,10 +17,35 @@ iscompat() {
 }
 
 build() {
-	fetch_extract "http://www.mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-${version}/gcc-${version}.tar.bz2" \
+	fetch_extract \
+		"http://www.mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-${version}/gcc-${version}.tar.bz2" \
 		"5ff75116b8f763fa0fb5621af80fc6fb3ea0f1b1a57520874982f03f26cd607f"
 
 	cd "gcc-${version}"
+
+	fetch \
+		"${repo}/../support/patches/dev/gcc-hash-style-both.patch" \
+		"3492332fa78b545ff46c2b5293d17c63c122be6f8f6fa4798864b7d4572b0024"
+
+	# Only apply pure64 patch, if system we are running on is pure
+	if [[ ! -d "/usr/lib64" && "$architecture" == "x86_64" ]]; then
+		fetch \
+			"${repo}/../support/patches/dev/gcc42_pure64.patch" \
+			"2d369cf93c6e15c3559c3560bce581e0ae5f1f34dc86bca013ac67ef1c1a9ff9"
+
+		patch -Np1 -i gcc42_pure64.patch
+	fi
+
+	patch -Np0 -i gcc-hash-style-both.patch
+
+	# Do not install libiberty
+	sed -i 's/install_to_$(INSTALL_DEST) //' libiberty/Makefile.in
+
+	# Do not run fixincludes
+	sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
+
+	sed -i 's/BUILD_INFO=info/BUILD_INFO=/' gcc/configure
+	sed -i 's/struct siginfo/siginfo_t/' "gcc/config/i386/linux-unwind.h"
 
 	build_wrap_ldflags ./configure \
 		--prefix="${prefix}/usr" \
@@ -28,7 +54,7 @@ build() {
 		--libdir="${prefix}/usr/lib" \
 		--libexecdir="${prefix}/usr/lib" \
 		--enable-shared \
-		--enable-languages=c,c++,fortran,objc,obj-c++ \
+		--enable-languages="${_languages}" \
 		--enable-__cxa_atexit \
 		--disable-libstdcxx-pch \
 		--disable-multilib \
@@ -46,7 +72,7 @@ build() {
 
 installenv() {
 	cd "gcc-${version}"
-	make DESTDIR="${destdir}" install
+	make -j1 DESTDIR="${destdir}" install
 	ln -s gcc "${destdir}/${prefix}/usr/bin/cc"
 }
 

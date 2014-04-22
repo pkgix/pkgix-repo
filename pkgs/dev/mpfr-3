@@ -1,7 +1,7 @@
 
 source_pkg ".functions/build" "${repo}"
 
-version=3.1.1
+version=3.1.2
 description="MPFR"
 depends=('dev/gmp-5')
 website="http://www.mpfr.org"
@@ -36,15 +36,15 @@ iscompat() {
 build() {
 	fetch_extract \
 		"http://www.mpfr.org/mpfr-${version}/mpfr-${version}.tar.bz2" \
-		"7b66c3f13dc8385f08264c805853f3e1a8eedab8071d582f3e661971c9acd5fd"
+		"79c73f60af010a30a5c27a955a1d2d01ba095b72537dab0ecaad57f5a7bb1b6b"
 
 	cd "mpfr-${version}"
 
 	fetch \
-		"$repo/../support/patches/dev/mpfr-3.1.1-allpatches.patch" \
-		"1aeefe799d29bafde1ab6c889a8a0adb6597fec6bc10be761dc4e366bcecbec5"
+		"$repo/../support/patches/dev/mpfr-3.1.2-p5.patch" \
+		"b960be087773863f6602a107cd9614e1561636d2bd62eec6355dca9bf4745cdf"
 
-	patch -Np1 -i mpfr-3.1.1-allpatches.patch
+	patch -p1 -i mpfr-3.1.2-p5.patch
 
 	build_wrap_ldflags ./configure --prefix="${prefix}/usr" --enable-thread-safe --enable-shared
 	make
