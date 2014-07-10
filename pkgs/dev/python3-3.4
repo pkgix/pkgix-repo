@@ -30,11 +30,11 @@ build() {
 		--with-threads \
 		--with-computed-gotos \
 		--enable-ipv6 \
-		--with-valgrind \
 		--with-dbmliborder=gdbm:ndbm \
 		--with-system-ffi \
-		--with-system-libmpdec \
 		--without-ensurepip
+		#--with-valgrind \
+		#--with-system-libmpdec \
 		#--with-system-expat \
 	
 	make
