@@ -1,5 +1,5 @@
 
-version=4.0.1
+version=5.4.1
 description="Easily download, build, install, upgrade, and uninstall Python packages"
 website="http://pypi.python.org/pypi/setuptools"
 license=('PSF')
@@ -14,7 +14,7 @@ iscompat()    { return 0; }
 build() {
 	fetch_extract \
 		"http://pypi.python.org/packages/source/s/setuptools/setuptools-${version}.tar.gz" \
-		"bdb18342c53a2320a9dfdb0897fc3b688f01108eb21108c557d01ede9611dba7"
+		"41194dc283bd186d5a7825c16b89d88bee369a6c4c4c7494e84909933b6f63be"
 
 	cd "setuptools-${version}"
 	python3 setup.py build

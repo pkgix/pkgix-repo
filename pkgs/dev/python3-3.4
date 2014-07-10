@@ -1,0 +1,57 @@
+# Based on: https://projects.archlinux.org/svntogit/packages.git/tree/trunk/PKGBUILD?h=packages/python
+source_pkg ".functions/build" "${repo}"
+
+
+version=3.4.1
+description="The Python 3 interpreter"
+depends=("dev/gdbm" "dev/readline")
+website="http://www.python.org"
+license=('PSF')
+
+_pybasever="${version%.*}"
+
+isinstalled() {
+	type -p python3 &>/dev/null && python3 --version 2>&1 | grep -q "$version" &> /dev/null
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://www.python.org/ftp/python/${version}/Python-${version}.tar.xz" \
+		"c595a163104399041fcbe1c5c04db4c1da94f917b82ce89e8944c8edff7aedc4"
+
+	cd "Python-${version}"
+
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr" \
+		--enable-shared \
+		--with-threads \
+		--with-computed-gotos \
+		--enable-ipv6 \
+		--with-valgrind \
+		--with-dbmliborder=gdbm:ndbm \
+		--with-system-ffi \
+		--with-system-libmpdec \
+		--without-ensurepip
+		#--with-system-expat \
+	
+	make
+}
+
+installenv() {
+	cd "Python-${version}"
+	make DESTDIR="${destdir}" install maninstall
+
+	ln -sf python3               "${destdir}/${prefix}/usr/bin/python"
+	ln -sf python3-config        "${destdir}/${prefix}/usr/bin/python-config"
+	ln -sf idle3                 "${destdir}/${prefix}/usr/bin/idle"
+	ln -sf pydoc3                "${destdir}/${prefix}/usr/bin/pydoc"
+	ln -sf python${_pybasever}.1 "${destdir}/${prefix}/usr/share/man/man1/python3.1"
+
+	ln -sf ../../libpython${_pybasever}m.so \
+		"${destdir}/${prefix}/usr/lib/python${_pybasever}/config-${_pybasever}m/libpython${_pybasever}m.so"
+}
+
+# vim: set ft=sh :

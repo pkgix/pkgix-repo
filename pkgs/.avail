@@ -48,16 +48,16 @@ dev/python2-pip                            1.5.6              An easy_install re
 dev/python2-scons-2.2.0                    2.2.0              Scons build system 2.2.0
 dev/python2-setuptools                     4.0.1              Easily download, build, install, upgrade, and uninstall Python packages
 dev/python2-wrapper                        20140710           Python 2 wrapper to set PYTHONPATH properly
-dev/python3                                3.3                Metapackage for Python 3
+dev/python3                                3.4                Metapackage for Python 3
 dev/python3-3.2                            3.2.3              The Python 3 interpreter
 dev/python3-3.3                            3.3.4              The Python 3 interpreter
+dev/python3-3.4                            3.4.1              The Python 3 interpreter
 dev/python3-latexcodec                     0.3.0              Latexcodec
 dev/python3-oset                           0.1.3              Ordered set
 dev/python3-pip                            1.5.6              An easy_install replacement for installing pypi python packages
 dev/python3-pybtex                         0.17               Pybtex
-dev/python3-pybtex-bzr                     20131117           Pybtex
 dev/python3-pybtex-docutils                0.2.0              pybtex-docutils
-dev/python3-setuptools                     4.0.1              Easily download, build, install, upgrade, and uninstall Python packages
+dev/python3-setuptools                     5.4.1              Easily download, build, install, upgrade, and uninstall Python packages
 dev/python3-sphinxcontrib-bibtex           0.2.9              A Sphinx extension for BibTeX style citations
 dev/python3-wrapper                        20140710           Python 3 wrapper to set PYTHONPATH properly
 dev/python3-yaml                           3.10               PyYAML
