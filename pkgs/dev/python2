@@ -1,12 +1,12 @@
 
-version=2.7.3
+version=2.7.7
 description="Metapackage for Python 2"
 
 _satisfied() {
 	type -p python2 &> /dev/null
 }
 
-_satisfied && metapkg=dev/python2-wrapper || metapkg=dev/python2-$version
+_satisfied && metapkg=dev/python2-wrapper || metapkg=dev/python2-${version%.*}
 
 satisfied() { [[ -f "${prefix}/usr/bin/python2" ]]; }
 

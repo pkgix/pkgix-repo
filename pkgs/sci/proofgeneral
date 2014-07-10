@@ -1,0 +1,35 @@
+
+version=4.2
+description="Generic interface for proof assistants."
+depends=()
+license=('GPL')
+website="http://proofgeneral.inf.ed.ac.uk"
+
+isinstalled() { return 1; }
+iscompat() { return 0; }
+
+build() {
+	fetch_extract \
+		"http://proofgeneral.inf.ed.ac.uk/releases/ProofGeneral-${version}.tgz" \
+		"3567b68077798396ccd55c501b7ea7bd2c4d6300e4c74ff609dc19837d050b27"
+
+	cd "ProofGeneral-${version}"
+	make clean
+}
+
+installenv() {
+	mkdir -p \
+		"${destdir}/${prefix}/usr/bin" \
+		"${destdir}/${prefix}/opt"
+
+	cp -a "ProofGeneral-${version}" "${destdir}/${prefix}/opt/ProofGeneral"
+
+	cat > emacs-pg <<EOF
+#!/bin/sh
+exec emacs -l "${prefix}/opt/ProofGeneral/generic/proof-site.el" "\$@"
+EOF
+
+	install -D -m 0755 emacs-pg "${destdir}/${prefix}/usr/bin"
+}
+
+# vim: set ft=sh:

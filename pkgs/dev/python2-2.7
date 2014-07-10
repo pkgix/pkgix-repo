@@ -2,7 +2,7 @@
 source_pkg ".functions/build" "${repo}"
 
 
-version=2.7.3
+version=2.7.7
 description="The Python 2 interpreter"
 depends=("dev/gdbm" "dev/readline")
 website="http://www.python.org"
@@ -20,8 +20,8 @@ iscompat() {
 
 build() {
 	fetch_extract \
-		"http://www.python.org/ftp/python/${version}/Python-${version}.tar.bz2" \
-		"726457e11cb153adc3f428aaf1901fc561a374c30e5e7da6742c0742a338663c"
+		"https://www.python.org/ftp/python/${version}/Python-${version}.tgz" \
+		"7f49c0a6705ad89d925181e27d0aaa025ee4731ce0de64776c722216c3e66c42"
 
 	cd "Python-${version}"
 
@@ -31,9 +31,15 @@ build() {
 	# Enable built-in SQLite module to load extensions
 	sed -i "/SQLITE_OMIT_LOAD_EXTENSION/d" setup.py
 
-	build_wrap_ldflags ./configure --prefix="${prefix}/usr" --enable-shared --with-threads --enable-ipv6 \
-	            --enable-unicode=ucs4 --with-system-expat --with-system-ffi \
-	            --with-dbmliborder=gdbm:ndbm
+	build_wrap_ldflags ./configure \
+		--prefix="${prefix}/usr" \
+		--enable-shared \
+		--with-threads \
+		--enable-ipv6 \
+		--enable-unicode=ucs4 \
+		--with-system-expat \
+		--with-system-ffi \
+		--with-dbmliborder=gdbm:ndbm
 
 	make 
 }

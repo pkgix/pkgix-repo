@@ -1,7 +1,7 @@
 # Based on: https://projects.archlinux.org/svntogit/community.git/tree/trunk/PKGBUILD?h=packages/pypy
 source_pkg ".functions/build" "${repo}"
 
-version=2.3
+version=2.3.1
 description="A Python implementation written in Python, JIT enabled"
 depends=("dev/expat")
 website="http://pypy.org"
@@ -13,7 +13,7 @@ iscompat()    { return 0; }
 build() {
 	fetch_extract \
 		"https://bitbucket.org/pypy/pypy/downloads/pypy-${version}-src.tar.bz2" \
-		"be2c271e7f9d7c0059a551ba1501713c00336e551e7f13107f0f34c721d95b0c"
+		"sha1=833b33042456fe381cae4481b2eb536c5787d6c7"
 
 	cd pypy-*/pypy/goal
 
@@ -30,6 +30,7 @@ installenv() {
 
 	mkdir -p "${dest_prefix}"/usr/bin
 	ln -s "${prefix}"/opt/pypy/bin/pypy-c "${dest_prefix}"/usr/bin/pypy
+	ln -s "${prefix}"/opt/pypy/bin/pypy-c "${dest_prefix}"/usr/bin/pypy2
 }
 
 # vim: set ft=sh :

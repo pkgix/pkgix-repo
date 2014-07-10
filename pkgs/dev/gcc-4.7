@@ -1,7 +1,7 @@
 
 source_pkg ".functions/build" "${repo}"
 
-version=4.7.3
+version=4.7.4
 description="The GCC compiler"
 depends=('dev/gmp-5' 'dev/mpfr-3' 'dev/libmpc' 'dev/ppl')
 website="http://gcc.gnu.org/"
@@ -20,7 +20,7 @@ iscompat() {
 build() {
 	fetch_extract \
 		"ftp://gcc.gnu.org/pub/gcc/releases/gcc-${version}/gcc-${version}.tar.bz2" \
-		"2f7c37eb4fc14422ff2358a9ef59c974a75ab41204ef0e49fc34ab1d8981a9c3"
+		"92e61c6dc3a0a449e62d72a38185fda550168a86702dea07125ebd3ec3996282"
 
 	cd "gcc-${version}"
 
@@ -33,11 +33,10 @@ build() {
 		patch -Np1 -i gcc42_pure64.patch
 	fi
 
-	fetch \
-		"${repo}/../support/patches/dev/gcc-4.7-texinfo.patch" \
-		"9b3972a37046027189fb412cfd193711b0831b3ff4d5247e2a2481c776f4a8d6"
-
-	patch -Np1 -i gcc-4.7-texinfo.patch
+	#fetch \
+	#	"${repo}/../support/patches/dev/gcc-4.7-texinfo.patch" \
+	#	"9b3972a37046027189fb412cfd193711b0831b3ff4d5247e2a2481c776f4a8d6"
+	#patch -Np1 -i gcc-4.7-texinfo.patch
 
 	# Do not install libiberty
 	sed -i 's/install_to_$(INSTALL_DEST) //' libiberty/Makefile.in

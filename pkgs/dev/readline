@@ -23,11 +23,7 @@ isinstalled() {
 	done
 	IFS="$old_IFS"
 
-	if [[ -z "$headerpath" ]]; then
-		return 1
-	else
-		grep -q $'^#define[ \t]*RL_READLINE_VERSION[ \t]*0x0602' "$headerpath"
-	fi
+	[[ -n "$headerpath" ]]
 }
 
 iscompat() {

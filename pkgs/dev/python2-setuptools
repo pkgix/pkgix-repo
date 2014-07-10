@@ -1,7 +1,7 @@
 
 source_pkg ".functions/build" "${repo}"
 
-version=2.2
+version=4.0.1
 description="Easily download, build, install, upgrade, and uninstall Python packages"
 website="http://pypi.python.org/pypi/setuptools"
 license=('PSF')
@@ -16,7 +16,7 @@ iscompat()    { return 0; }
 build() {
 	fetch_extract \
 		"http://pypi.python.org/packages/source/s/setuptools/setuptools-${version}.tar.gz" \
-		"6fb1f21dea64e323e7ad2531a6795eeb6f5e17a85189dee61a86baca60b18984"
+		"bdb18342c53a2320a9dfdb0897fc3b688f01108eb21108c557d01ede9611dba7"
 
 	cd "setuptools-${version}"
 	python2 setup.py build

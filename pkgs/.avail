@@ -2,7 +2,7 @@ dev/binutils-2.22                          2.22.90            GNU Binutils
 dev/expat                                  2.1.0              An XML parser library
 dev/gcc-4.4                                4.4.7              The GCC compiler
 dev/gcc-4.6                                4.6.4              The GCC compiler
-dev/gcc-4.7                                4.7.3              The GCC compiler
+dev/gcc-4.7                                4.7.4              The GCC compiler
 dev/gcc-env2args                           0.1                GCC Environment to Args wrapper script
 dev/gdbm                                   1.10               GNU dbm
 dev/ghc                                    1                  Metapackage for GHC
@@ -28,9 +28,10 @@ dev/libmpc                                 1.0.1              libmpc
 dev/make-3.80                              3.80               GNU Make
 dev/mpfr                                   3.1.2              Metapackage for MPFR
 dev/mpfr-3                                 3.1.2              MPFR
-dev/ocaml                                  4.00               Metapackage for Ocaml
+dev/ocaml                                  4.01               Metapackage for Ocaml
 dev/ocaml-3.12                             3.12.1             A functional language with OO extensions
 dev/ocaml-4.00                             4.00.1             A functional language with OO extensions
+dev/ocaml-4.01                             4.01.0             A functional language with OO extensions
 dev/pcre                                   8.34               Perl style regular expressions library
 dev/polyml-5.4                             ->                 dev/polyml-5.4.1
 dev/polyml-5.4.1                           5.4.1              Poly/ML: Standard ML (SML) implementation
@@ -38,27 +39,27 @@ dev/polyml-5.5                             ->                 dev/polyml-5.5.1
 dev/polyml-5.5.0                           5.5                Poly/ML: Standard ML (SML) implementation
 dev/polyml-5.5.1                           5.5.1              Poly/ML: Standard ML (SML) implementation
 dev/ppl                                    1.1                PPL
-dev/pypy2                                  2.3                A Python implementation written in Python, JIT enabled
+dev/pypy2                                  2.3.1              A Python implementation written in Python, JIT enabled
 dev/pypy2-pip                              1.5.4              An easy_install replacement for installing pypi python packages
 dev/pypy2-setuptools                       2.2                Easily download, build, install, upgrade, and uninstall Python packages
-dev/python2                                2.7.3              Metapackage for Python 2
-dev/python2-2.7                            2.7.3              The Python 2 interpreter
-dev/python2-pip                            1.5.4              An easy_install replacement for installing pypi python packages
+dev/python2                                2.7.7              Metapackage for Python 2
+dev/python2-2.7                            2.7.7              The Python 2 interpreter
+dev/python2-pip                            1.5.6              An easy_install replacement for installing pypi python packages
 dev/python2-scons-2.2.0                    2.2.0              Scons build system 2.2.0
-dev/python2-setuptools                     2.2                Easily download, build, install, upgrade, and uninstall Python packages
-dev/python2-wrapper                        20140510           Python 2 wrapper to set PYTHONPATH properly
+dev/python2-setuptools                     4.0.1              Easily download, build, install, upgrade, and uninstall Python packages
+dev/python2-wrapper                        20140710           Python 2 wrapper to set PYTHONPATH properly
 dev/python3                                3.3                Metapackage for Python 3
 dev/python3-3.2                            3.2.3              The Python 3 interpreter
 dev/python3-3.3                            3.3.4              The Python 3 interpreter
 dev/python3-latexcodec                     0.3.0              Latexcodec
 dev/python3-oset                           0.1.3              Ordered set
-dev/python3-pip                            1.5.4              An easy_install replacement for installing pypi python packages
+dev/python3-pip                            1.5.6              An easy_install replacement for installing pypi python packages
 dev/python3-pybtex                         0.17               Pybtex
 dev/python3-pybtex-bzr                     20131117           Pybtex
 dev/python3-pybtex-docutils                0.2.0              pybtex-docutils
-dev/python3-setuptools                     2.2                Easily download, build, install, upgrade, and uninstall Python packages
+dev/python3-setuptools                     4.0.1              Easily download, build, install, upgrade, and uninstall Python packages
 dev/python3-sphinxcontrib-bibtex           0.2.9              A Sphinx extension for BibTeX style citations
-dev/python3-wrapper                        20140510           Python 3 wrapper to set PYTHONPATH properly
+dev/python3-wrapper                        20140710           Python 3 wrapper to set PYTHONPATH properly
 dev/python3-yaml                           3.10               PyYAML
 dev/readline                               6.2                GNU readline
 dev/swig                                   ->                 dev/swig-2.0.4
@@ -67,7 +68,9 @@ net/socat                                  ->                 net/socat-1.7.2.1
 net/socat-1.7.2.1                          1.7.2.1            Socat -- Multipurpose relay
 net/unison-2.40.102                        2.40.102           Unison file-synchronization tool
 net/unison-2.40.65                         2.40.65            Unison file-synchronization tool
+sci/coq                                    ->                 sci/coq-8.4pl4
 sci/coq-8.4                                8.4                Formal proof management system
+sci/coq-8.4pl4                             8.4pl4             Formal proof management system
 sci/cvc3                                   ->                 sci/cvc3-2.4.1
 sci/cvc3-2.4.1                             2.4.1              Automatic theorem prover for Satisfiability Modulo Theories (SMT)
 sci/isabelle-2011                          2011-1             Isabelle proof assistant
@@ -77,6 +80,7 @@ sci/isabelle-dist-2013                     2013-2             Isabelle proof ass
 sci/isabelle-haskabelle-deps-2013          2013               Dummy package with dependencies for Haskabelle 2013
 sci/nusmv-2                                ->                 sci/nusmv-2.5.4
 sci/nusmv-2.5.4                            2.5.4              New Symbolic Model Checker
+sci/proofgeneral                           4.2                Generic interface for proof assistants.
 sci/spin-6                                 ->                 sci/spin-6.2.5
 sci/spin-6.2.3                             6.2.3              Tool for the formal verification of distributed software systems.
 sci/spin-6.2.5                             6.2.5              Tool for the formal verification of distributed software systems.

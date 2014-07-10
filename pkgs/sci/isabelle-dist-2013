@@ -63,7 +63,7 @@ build() {
 installenv() {
 	mkdir -p \
 		"${destdir}/${prefix}/usr/bin" \
-		"${destdir}/${prefix}/opt" \
+		"${destdir}/${prefix}/opt"
 
 	cp -a "Isabelle$version" "${destdir}/${prefix}/opt/Isabelle$version"
 

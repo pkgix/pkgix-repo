@@ -1,5 +1,5 @@
 
-version=4.00
+version=4.01
 metapkg=dev/ocaml-$version
 description="Metapackage for Ocaml"
 
