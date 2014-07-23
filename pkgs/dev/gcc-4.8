@@ -1,0 +1,64 @@
+# Based on: https://projects.archlinux.org/svntogit/packages.git/tree/trunk/PKGBUILD?h=packages/gcc
+
+source_pkg ".functions/build" "${repo}"
+
+version=4.8.3
+description="The GCC compiler"
+depends=('dev/libmpc')
+website="http://gcc.gnu.org/"
+license=('GPL' 'LGPL' 'FDL' 'custom')
+forceinstall=('usr/share/info/dir')
+_languages="c,c++,fortran"
+
+isinstalled() {
+	gcc --version | grep -q " $version " &> /dev/null
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"ftp://gcc.gnu.org/pub/gcc/releases/gcc-${version}/gcc-${version}.tar.bz2" \
+		"6a8e4f11b185f4fe2ed9d7fc053e80f8c7e73f800c045f51f9d8bea33f080f1e"
+
+	cd "gcc-${version}"
+
+	# Only apply pure64 patch, if system we are running on is pure
+	if [[ ! -d "/usr/lib64" && "$architecture" == "x86_64" ]]; then
+		sed -i '/m64=/s/lib64/lib/' gcc/config/i386/t-linux64
+	fi
+
+	sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure
+	sed -i 's#@target_header_dir@#libiberty#' libiberty/Makefile.in
+
+	# Do not run fixincludes
+	sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
+
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr" \
+		--libdir="${prefix}/usr/lib" --libexecdir="${prefix}/usr/lib" \
+		--mandir="${prefix}/usr/share/man" --infodir="${prefix}/usr/share/info" \
+		--enable-languages="${_languages}" \
+		--enable-shared --enable-threads=posix \
+		--with-system-zlib --enable-__cxa_atexit \
+		--disable-libunwind-exceptions --enable-clocale=gnu \
+		--disable-libstdcxx-pch --disable-libssp \
+		--enable-gnu-unique-object --enable-linker-build-id \
+		--enable-cloog-backend=isl --disable-cloog-version-check \
+		--enable-lto --enable-plugin --enable-install-libiberty \
+		--with-linker-hash-style=gnu \
+		--disable-multilib --disable-werror \
+		--enable-checking=release
+
+	make
+}
+
+installenv() {
+	cd "gcc-${version}"
+
+	make -j1 DESTDIR="${destdir}" install
+	ln -s gcc "${destdir}/${prefix}/usr/bin/cc"
+}
+
+# vim: set ft=sh :
