@@ -1,0 +1,33 @@
+source_pkg ".functions/build" "${repo}"
+
+version=20140723
+description="A safe, concurrent, practical language"
+depends=()
+website="http://www.rust-lang.org"
+license=('MIT' 'Apache')
+
+isinstalled() { return 1; }
+iscompat()    { return 0; }
+
+_git_repo="https://github.com/rust-lang/rust.git"
+_git_dir="${_git_repo##*/}"
+
+build() {
+	if [[ ! -d "${_git_dir}" ]]; then
+		git clone "${_git_repo}" "${_git_dir}" || return 1
+	fi
+
+	cd "${_git_dir}"
+
+	build_wrap_ldflags ./configure \
+		--prefix="${prefix}/usr"
+
+	make
+}
+
+installenv() {
+	cd "${_git_dir}"
+	make DESTDIR="${destdir}" install
+}
+
+# vim: set ft=sh :
