@@ -4,7 +4,6 @@
 : ${GCC_ENV2ARGS_RPATH_ONLY:=1}
 
 binary="${0##*/}"
-path="${0%/*}"
 args=( -Wl,-rpath="$LIBRARY_PATH" )
 
 if (( ! GCC_ENV2ARGS_RPATH_ONLY )); then
@@ -19,4 +18,4 @@ if (( ! GCC_ENV2ARGS_RPATH_ONLY )); then
 	done
 fi
 
-exec "${path}/${binary%%-env2args}" "${args[@]}" "$@"
+exec "${binary%%-env2args}" "${args[@]}" "$@"
