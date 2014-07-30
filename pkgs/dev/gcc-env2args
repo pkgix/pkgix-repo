@@ -13,7 +13,7 @@ iscompat() { return 0; }
 build() {
 	fetch \
 		"${repo}/../support/gcc/gcc-env2args" \
-		"3b90b772702920792f9b2ba0e8ff6fbe443f9f250cdcb669dd12c1d66dbe5867"
+		"4e4b04ffceb9a380fff47c9744fb07e40cb504b9d97a684433b4f7ab0f7b01cd"
 }
 
 installenv() {
