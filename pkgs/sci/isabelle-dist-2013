@@ -48,7 +48,7 @@ EOF
 
 build() {
 	fetch_extract \
-		"http://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/Isabelle${version}_linux.tar.gz" \
+		"http://isabelle.in.tum.de/website-Isabelle2013-2/dist/Isabelle${version}_linux.tar.gz" \
 		"b3387dffab3527c97707bafe6124a7f21530758eb6f6119a9df45265017558e1"
 
 	cd "Isabelle$version"

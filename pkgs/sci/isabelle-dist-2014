@@ -1,5 +1,5 @@
 
-version=2014-RC0
+version=2014
 description="Isabelle proof assistant (binary distribution)"
 depends=()
 license=('BSD')
@@ -50,8 +50,8 @@ EOF
 
 build() {
 	fetch_extract \
-		"http://isabelle.in.tum.de/website-Isabelle2014-RC0/dist/Isabelle2014-RC0_linux.tar.gz" \
-		"3ac6fdb1e22943217cdd51601fde29d4c00401be649a842b040b174cd8206586"
+		"http://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/Isabelle2014_linux.tar.gz" \
+		"5e8aa384f41727d2a3d40d5dab564f6bdd3553f4a6bb533251732b4a39bf017d"
 
 	fetch_extract \
 		"http://isabelle.in.tum.de/components/ProofGeneral-${_pg_version}.tar.gz" \
@@ -90,7 +90,7 @@ EOF
 }
 
 postinstall() {
-	: isabelle build -s -b HOL
+	isabelle build -s -b HOL
 }
 
 # vim: set ft=sh:
