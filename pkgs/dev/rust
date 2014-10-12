@@ -1,6 +1,6 @@
 source_pkg ".functions/build" "${repo}"
 
-version=20140723
+version=20141012
 description="A safe, concurrent, practical language"
 depends=()
 website="http://www.rust-lang.org"

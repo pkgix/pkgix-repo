@@ -1,6 +1,6 @@
 source_pkg ".functions/build" "${repo}"
 
-version=20140723
+version=20141012
 description="The Rust package manager"
 depends=('dev/rust')
 website="http://crates.io/"
@@ -18,12 +18,16 @@ build() {
 	fi
 
 	cd "${_git_dir}"
-	make PREFIX="${prefix}/usr"
+
+	build_wrap_ldflags ./configure \
+		--prefix="${prefix}/usr"
+
+	make
 }
 
 installenv() {
 	cd "${_git_dir}"
-	make PREFIX="${prefix}/usr" DESTDIR="${destdir}" install
+	make DESTDIR="${destdir}" install
 }
 
 # vim: set ft=sh :
