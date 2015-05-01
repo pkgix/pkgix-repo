@@ -74,10 +74,11 @@ net/socat                                  ->                 net/socat-1.7.2.1
 net/socat-1.7.2.1                          1.7.2.1            Socat -- Multipurpose relay
 net/unison-2.40.102                        2.40.102           Unison file-synchronization tool
 net/unison-2.40.65                         2.40.65            Unison file-synchronization tool
-sci/coq                                    ->                 sci/coq-8.4pl5
+sci/coq                                    ->                 sci/coq-8.4pl6
 sci/coq-8.4                                8.4                Formal proof management system
 sci/coq-8.4pl4                             8.4pl4             Formal proof management system
 sci/coq-8.4pl5                             8.4pl5             Formal proof management system
+sci/coq-8.4pl6                             8.4pl6             Formal proof management system
 sci/cvc3                                   ->                 sci/cvc3-2.4.1
 sci/cvc3-2.4.1                             2.4.1              Automatic theorem prover for Satisfiability Modulo Theories (SMT)
 sci/isabelle-2011                          2011-1             Isabelle proof assistant
