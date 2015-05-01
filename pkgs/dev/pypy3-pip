@@ -1,0 +1,5 @@
+
+source_pkg "dev/pypy2-pip" "${repo}"
+depends=("dev/pypy3" "dev/pypy3-setuptools")
+
+# vim: set ft=sh :

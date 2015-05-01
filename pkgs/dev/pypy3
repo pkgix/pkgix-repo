@@ -1,7 +1,7 @@
 # Based on: https://projects.archlinux.org/svntogit/community.git/tree/trunk/PKGBUILD?h=packages/pypy
 source_pkg ".functions/build" "${repo}"
 
-version=2.5.1
+version=2.4.0
 description="A Python implementation written in Python, JIT enabled"
 depends=("dev/expat")
 website="http://pypy.org"
@@ -12,16 +12,16 @@ iscompat()    { return 0; }
 
 build() {
 	fetch_extract \
-		"https://bitbucket.org/pypy/pypy/downloads/pypy-${version}-src.tar.bz2" \
-		"sha1=e642ad3968e40399cf1989e7b6c70860a5675a65"
+		"https://bitbucket.org/pypy/pypy/downloads/pypy3-${version}-src.tar.bz2" \
+		"md5=96ba72916114d16904e12562b5d84e51"
 
-	cd pypy-*/pypy/goal
+	cd pypy3-*/pypy/goal
 
 	python2 ../../rpython/bin/rpython -Ojit targetpypystandalone
 }
 
 installenv() {
-	cd pypy-*/pypy/tool/release
+	cd pypy3-*/pypy/tool/release
 
 	python2 package.py ../../../ pypy pypy-c "${build_dir}"/pypy.tar.bz2
 
@@ -30,7 +30,7 @@ installenv() {
 
 	mkdir -p "${dest_prefix}"/usr/bin
 	ln -s "${prefix}"/opt/pypy/bin/pypy-c "${dest_prefix}"/usr/bin/pypy
-	ln -s "${prefix}"/opt/pypy/bin/pypy-c "${dest_prefix}"/usr/bin/pypy2
+	ln -s "${prefix}"/opt/pypy/bin/pypy-c "${dest_prefix}"/usr/bin/pypy3
 }
 
 # vim: set ft=sh :

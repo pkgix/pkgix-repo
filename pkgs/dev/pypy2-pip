@@ -1,7 +1,7 @@
 
 source_pkg ".functions/build" "${repo}"
 
-version=1.5.4
+version=6.0.8
 description="An easy_install replacement for installing pypi python packages"
 depends=("dev/pypy2" "dev/pypy2-setuptools")
 website="http://www.pip-installer.org"
@@ -17,7 +17,7 @@ iscompat() {
 build() {
 	fetch_extract \
 		"http://pypi.python.org/packages/source/p/pip/pip-${version}.tar.gz" \
-		"70208a250bb4afdbbdd74c3ac35d4ab9ba1eb6852d02567a6a87f2f5104e30b9"
+		"0d58487a1b7f5be2e5e965c11afbea1dc44ecec8069de03491a4d0d6c85f4551"
 
 	cd "pip-${version}"
 	pypy setup.py build

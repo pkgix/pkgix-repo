@@ -1,6 +1,6 @@
 # Based on: http://aur.archlinux.org/packages/tl/tla-tools/PKGBUILD
 
-version=20130425
+version=20140313
 description="Tools for the TLA+2 language"
 depends=()
 license=('custom:MSR-EULA')
@@ -12,7 +12,7 @@ iscompat()    { return 0; }
 build() {
 	PKGIX_FETCH="wget --no-check-certificate -O %s" fetch_extract \
 		"https://tla.msr-inria.inria.fr/tlatoolbox/dist/tla.zip" \
-		"2b016570707b48d1b4191b1c36bcec229ce23e664014c55c7385edb273702cc7"
+		"b9a3ca2ff7f01cc69350ec9c3b4da9e8684f6d6fb25aec56e4c45935fe4593bf"
 }
 
 installenv() {
