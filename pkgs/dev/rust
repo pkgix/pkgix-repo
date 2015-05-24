@@ -1,6 +1,6 @@
 source_pkg ".functions/build" "${repo}"
 
-version=20141012
+version=1.0.0
 description="A safe, concurrent, practical language"
 depends=()
 website="http://www.rust-lang.org"
@@ -11,16 +11,17 @@ iscompat()    { return 0; }
 
 _git_repo="https://github.com/rust-lang/rust.git"
 _git_dir="${_git_repo##*/}"
+_git_branch=$version
 
 build() {
 	if [[ ! -d "${_git_dir}" ]]; then
-		git clone "${_git_repo}" "${_git_dir}" || return 1
+		git clone --depth 1 -b "${_git_branch}" "${_git_repo}" "${_git_dir}" || return 1
 	fi
 
 	cd "${_git_dir}"
 
 	build_wrap_ldflags ./configure \
-		--prefix="${prefix}/usr"
+		--prefix="${prefix}/usr" --disable-docs
 
 	make
 }

@@ -1,6 +1,6 @@
 source_pkg ".functions/build" "${repo}"
 
-version=20141012
+version=20150516
 description="The Rust package manager"
 depends=('dev/rust')
 website="http://crates.io/"
@@ -14,7 +14,7 @@ _git_dir="${_git_repo##*/}"
 
 build() {
 	if [[ ! -d "${_git_dir}" ]]; then
-		git clone --recursive "${_git_repo}" "${_git_dir}" || return 1
+		git clone --depth 1 --recursive "${_git_repo}" "${_git_dir}" || return 1
 	fi
 
 	cd "${_git_dir}"
