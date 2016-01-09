@@ -38,14 +38,14 @@ dev/python2-2.7                            2.7.7              The Python 2 inter
 dev/python2-pip                            1.5.6              An easy_install replacement for installing pypi python packages
 dev/python2-scons-2.2.0                    2.2.0              Scons build system 2.2.0
 dev/python2-setuptools                     4.0.1              Easily download, build, install, upgrade, and uninstall Python packages
-dev/python2-wrapper                        20150612           Python 2 wrapper to set PYTHONPATH properly
+dev/python2-wrapper                        20160109           Python 2 wrapper to set PYTHONPATH properly
 dev/python3                                3.4                Metapackage for Python 3
 dev/python3-3.2                            3.2.3              The Python 3 interpreter
 dev/python3-3.3                            3.3.4              The Python 3 interpreter
 dev/python3-3.4                            3.4.1              The Python 3 interpreter
 dev/python3-pip                            1.5.6              An easy_install replacement for installing pypi python packages
 dev/python3-setuptools                     5.4.1              Easily download, build, install, upgrade, and uninstall Python packages
-dev/python3-wrapper                        20150612           Python 3 wrapper to set PYTHONPATH properly
+dev/python3-wrapper                        20160109           Python 3 wrapper to set PYTHONPATH properly
 dev/readline                               6.2                GNU readline
 dev/rust                                   1.0.0              A safe, concurrent, practical language
 dev/swig                                   ->                 dev/swig-2.0.4
@@ -66,6 +66,7 @@ sci/isabelle-2012                          2012               Isabelle proof ass
 sci/isabelle-dist                          ->                 sci/isabelle-dist-2013
 sci/isabelle-dist-2013                     2013-2             Isabelle proof assistant (binary distribution)
 sci/isabelle-dist-2014                     2014               Isabelle proof assistant (binary distribution)
+sci/isabelle-dist-2015                     2015               Isabelle proof assistant (binary distribution)
 sci/nusmv-2                                ->                 sci/nusmv-2.5.4
 sci/nusmv-2.5.4                            2.5.4              New Symbolic Model Checker
 sci/proofgeneral                           4.2                Generic interface for proof assistants.
