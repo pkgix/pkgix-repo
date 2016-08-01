@@ -1,0 +1,38 @@
+# Based on: https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=cbmc
+
+source_pkg ".functions/build" "${repo}"
+
+version=5.4
+description="CBMC is a Bounded Model Checker for C and C++ programs"
+depends=()
+license=('custom')
+website="http://www.cprover.org/cbmc/"
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"https://github.com/diffblue/cbmc/archive/cbmc-5.4.tar.gz" \
+		"0eb809c7ee29f4c2256a2897b043f5ea6a2bd235990446c6b5624e743c775aea"
+
+	cd cbmc*/src/
+	make minisat2-download
+	make
+}
+
+installenv() {
+	cd cbmc*/src/
+
+	install -D "cbmc/cbmc" "${dest_prefix}/usr/bin/cbmc"
+	install -D "goto-cc/goto-cc" "${dest_prefix}/usr/bin/goto-cc"
+	install -D "goto-instrument/goto-instrument" "${dest_prefix}/usr/bin/goto-instrument"
+	install -D -m644 "../LICENSE" "${dest_prefix}/usr/share/licenses/cbmc/LICENSE"
+}
+
+# vim: set ft=sh:

@@ -1,0 +1,42 @@
+
+source_pkg ".functions/build" "${repo}"
+
+version=2.4
+description="Metitarski theorem prover"
+depends=('dev/polyml-5.5.1')
+license=('MIT')
+website="https://www.cl.cam.ac.uk/~lp15/papers/Arith/"
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch "hg+https://bitbucket.org/lcpaulson/metitarski#tag=V2_4"
+
+	cd "metitarski"
+	build_wrap_ldflags ./configure --prefix="${prefix}/usr"
+	make
+}
+
+installenv() {
+	cd "metitarski"
+	make DESTDIR="${destdir}" install
+
+	cat > "${destdir}/${prefix}/usr/bin/metit-tptp" <<EOF
+#!/bin/sh
+exec "${prefix}/usr/bin/metit" --tptp "${prefix}/opt/metitarski/tptp" "\$@"
+EOF
+	chmod +x "${destdir}/${prefix}/usr/bin/metit-tptp"
+
+	for x in Axioms Problems; do
+		mkdir -p "${destdir}/${prefix}/opt/metitarski/tptp/${x}"
+		cp -a tptp/${x} "${destdir}/${prefix}/opt/metitarski/tptp/"
+	done
+}
+
+# vim: set ft=sh:

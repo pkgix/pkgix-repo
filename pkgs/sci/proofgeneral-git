@@ -1,0 +1,31 @@
+
+version=git
+description="Generic interface for proof assistants."
+depends=()
+license=('GPL')
+website="http://proofgeneral.inf.ed.ac.uk"
+
+isinstalled() { return 1; }
+iscompat() { return 0; }
+
+build() {
+	git clone --depth 1 https://github.com/ProofGeneral/PG ProofGeneral
+	rm -rf ProofGeneral/.git
+}
+
+installenv() {
+	mkdir -p \
+		"${destdir}/${prefix}/usr/bin" \
+		"${destdir}/${prefix}/opt"
+
+	cp -a "ProofGeneral" "${destdir}/${prefix}/opt/ProofGeneral"
+
+	cat > emacs-pg <<EOF
+#!/bin/sh
+exec emacs -l "${prefix}/opt/ProofGeneral/generic/proof-site.el" "\$@"
+EOF
+
+	install -D -m 0755 emacs-pg "${destdir}/${prefix}/usr/bin"
+}
+
+# vim: set ft=sh:

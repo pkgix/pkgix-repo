@@ -1,0 +1,40 @@
+# Based on: https://aur.archlinux.org/packages/co/coq/PKGBUILD
+
+version=8.5pl2
+description="Formal proof management system"
+depends=("dev/ocaml")
+license=('GPL')
+website="http://coq.inria.fr"
+
+isinstalled() {
+	return 1
+}
+
+iscompat() {
+	return 0
+}
+
+build() {
+	fetch_extract \
+		"http://coq.inria.fr/distrib/V$version/files/coq-$version.tar.gz" \
+		"83239d1251bf6c54a9ca5045d738e469019b93ca601756bf982aab0654e4de73"
+
+	cd "coq-$version"
+
+	./configure \
+		-prefix "${prefix}/usr" \
+		-mandir "${prefix}/usr/share/man" \
+		-configdir "${prefix}/etc/xdg/coq" \
+		-coqide opt \
+		-usecamlp4 \
+		-with-doc no
+
+	make world
+}
+
+installenv() {
+	cd "coq-$version"
+	make COQINSTALLPREFIX="$destdir" install
+}
+
+# vim: set ft=sh:

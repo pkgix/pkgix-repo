@@ -50,7 +50,7 @@ EOF
 
 build() {
 	fetch_extract \
-		"http://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/Isabelle2014_linux.tar.gz" \
+		"http://isabelle.in.tum.de/website-Isabelle2014/dist/Isabelle2014_linux.tar.gz" \
 		"5e8aa384f41727d2a3d40d5dab564f6bdd3553f4a6bb533251732b4a39bf017d"
 
 	fetch_extract \

@@ -1,0 +1,49 @@
+
+version=2016
+description="Isabelle proof assistant (binary distribution)"
+depends=()
+license=('BSD')
+website="http://www.cl.cam.ac.uk/research/hvg/Isabelle/"
+
+_pg_version=4.2-2
+
+isinstalled() { return 1; }
+iscompat() { return 0; }
+
+build() {
+	fetch_extract \
+		"https://isabelle.in.tum.de/dist/Isabelle${version}_app.tar.gz" \
+		"64f5357f638220a855311a604eaf8fc4bb7e703b7cf3ea997723ace875c6014a"
+
+	fetch_extract \
+		"https://isabelle.in.tum.de/components/ProofGeneral-${_pg_version}.tar.gz" \
+		"b5b16cbc17b69d0b585452b282da2c1c5d7fcaae13385b10b2dce624c0ab53f7"
+
+	cd "Isabelle${version}"
+
+	sed -i "s:ISABELLE_HOME_USER=.*$:ISABELLE_HOME_USER=\"${prefix}/usr/local/share/Isabelle${version%-*}\":" etc/settings
+
+	mv "../ProofGeneral-${_pg_version}" contrib/
+	echo "contrib/ProofGeneral-${_pg_version}" >> etc/components
+}
+
+installenv() {
+	mkdir -p \
+		"${destdir}/${prefix}/usr/bin" \
+		"${destdir}/${prefix}/opt"
+
+	cp -a "Isabelle${version}" "${destdir}/${prefix}/opt/Isabelle$version"
+
+	cat > isabelle <<EOF
+#!/bin/sh
+exec "${prefix}/opt/Isabelle${version}/bin/isabelle" "\$@"
+EOF
+
+	install -D -m 0755 isabelle "${destdir}/${prefix}/usr/bin"
+}
+
+postinstall() {
+	isabelle build -s -b HOL
+}
+
+# vim: set ft=sh:
